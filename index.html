@@ -271,6 +271,7 @@
           <input
             type="text"
             id="qr-url-input"
+            value="https://michellemiyata.github.io/my-hospital-toolkit/"
             placeholder="Leave blank for honest QR Placeholder, or paste deployed URL..."
             oninput="updateQRConfiguration()"
             class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm font-mono text-slate-800"
@@ -283,7 +284,7 @@
           <input
             type="text"
             id="qr-short-input"
-            value="[your-hospital-url]/toolkit"
+            value="michellemiyata.github.io/my-hospital-toolkit"
             oninput="updateQRConfiguration()"
             class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm font-mono text-slate-800"
           />
@@ -808,8 +809,8 @@
     // =========================================================================
     // 2. CONFIGURABLE QR CODE GENERATOR (Real Scannable QR + Honest Placeholder)
     // =========================================================================
-    let currentQRUrl = '';
-    let currentShortUrl = '[your-hospital-url]/toolkit';
+    let currentQRUrl = 'https://michellemiyata.github.io/my-hospital-toolkit/';
+    let currentShortUrl = 'michellemiyata.github.io/my-hospital-toolkit';
 
     function createPlaceholderQRSVG() {
       return `
