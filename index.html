@@ -16,6 +16,34 @@
     body.large-text #digital-app-container {
       font-size: 120%;
     }
+    body.large-text #digital-app-container .text-xs {
+      font-size: 0.92rem !important;
+      line-height: 1.35rem !important;
+    }
+    body.large-text #digital-app-container .text-sm {
+      font-size: 1.08rem !important;
+      line-height: 1.5rem !important;
+    }
+    body.large-text #digital-app-container .text-base {
+      font-size: 1.22rem !important;
+      line-height: 1.65rem !important;
+    }
+    body.large-text #digital-app-container .text-lg {
+      font-size: 1.35rem !important;
+      line-height: 1.8rem !important;
+    }
+    body.large-text #digital-app-container .text-xl {
+      font-size: 1.5rem !important;
+      line-height: 1.95rem !important;
+    }
+    body.large-text #digital-app-container .text-2xl {
+      font-size: 1.75rem !important;
+      line-height: 2.15rem !important;
+    }
+    body.large-text #digital-app-container .text-3xl {
+      font-size: 2.05rem !important;
+      line-height: 2.4rem !important;
+    }
     body.high-contrast #digital-app-container {
       background-color: #000000 !important;
       color: #ffffff !important;
@@ -27,6 +55,11 @@
     }
     body.high-contrast #digital-app-container .subtext {
       color: #fde047 !important;
+    }
+    body.high-contrast #digital-app-container .hc-callout {
+      background-color: #1e293b !important;
+      border-color: #fde047 !important;
+      color: #ffffff !important;
     }
 
     /* ===================================================================== */
@@ -85,6 +118,9 @@
     }
 
     /* Responsive Scaling of A5 Preview in Interactive Viewer */
+    .flipbook-zoom-wrap {
+      overflow-x: hidden;
+    }
     @media (max-width: 1180px) and (min-width: 768px) {
       .flipbook-zoom-wrap {
         transform: scale(0.76);
@@ -97,6 +133,13 @@
         transform: scale(0.62);
         transform-origin: top center;
         margin-bottom: -210px;
+      }
+    }
+    @media (max-width: 420px) {
+      .flipbook-zoom-wrap {
+        transform: scale(0.54);
+        transform-origin: top center;
+        margin-bottom: -255px;
       }
     }
 
@@ -131,7 +174,7 @@
     }
 
     /* ===================================================================== */
-    /* PRINT MEDIA STYLES (Supports A4 Imposed Saddle-Stitch OR Sequential A5) */
+    /* PRINT MEDIA STYLES (Supports Sequential A5 OR A4 Imposed Saddle-Stitch) */
     /* ===================================================================== */
     @media print {
       html, body {
@@ -181,43 +224,40 @@
         break-after: auto;
       }
     }
-
+  </style>
+  <style id="dynamic-print-page-style">
     @page {
-      size: A4 landscape;
+      size: A5 portrait;
       margin: 0;
     }
   </style>
 </head>
-<body class="min-h-screen print-mode-imposed">
+<body class="min-h-screen print-mode-a5">
 
   <!-- ===================================================================== -->
-  <!-- TOP UNIFIED SERVICE BAR (Switch between Booklet, Print Sheets, & Web App) -->
+  <!-- TOP PATIENT-FACING NAVIGATION BAR (Digital Toolkit & Printable Booklet) -->
   <!-- ===================================================================== -->
   <div class="no-print bg-slate-900 text-white px-4 py-3 border-b border-slate-700 sticky top-0 z-50 shadow-md">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <span class="px-2.5 py-1 rounded-md bg-blue-600 text-xs font-extrabold uppercase tracking-wider">
-          Unified Hospital Service
+          Outpatient Pilot · V2
         </span>
         <div>
-          <div class="font-bold text-sm sm:text-base">My Hospital Toolkit — Physical A5 Booklet + Digital Companion</div>
-          <div class="text-xs text-slate-400">Includes Step-by-Step Wayfinding, Color-Coded Hospital Navigation, Talk Cards &amp; Checklists</div>
+          <div class="font-bold text-sm sm:text-base">My Hospital Toolkit</div>
+          <div class="text-xs text-slate-300">Plain-Language Visit Guide, Example Wayfinding, Talk Cards &amp; Printable A5 Booklet</div>
         </div>
       </div>
 
-      <!-- Mode Switcher -->
+      <!-- Patient-Facing Mode Switcher -->
       <div class="flex flex-wrap items-center gap-2" role="tablist" aria-label="Toolkit Views">
-        <button onclick="switchMainView('booklet-preview')" id="nav-btn-booklet-preview" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white flex items-center gap-2 transition shadow-sm">
-          <span>📖</span>
-          <span>1. Interactive 8-Page A5 Booklet</span>
-        </button>
-        <button onclick="switchMainView('print-sheets')" id="nav-btn-print-sheets" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-600 flex items-center gap-2 transition">
-          <span>🖨️</span>
-          <span>2. Print &amp; A4 Imposition Sheets (PDF)</span>
-        </button>
-        <button onclick="switchMainView('digital')" id="nav-btn-digital" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-600 flex items-center gap-2 transition">
+        <button onclick="switchMainView('digital')" id="nav-btn-digital" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white flex items-center gap-2 transition shadow-sm">
           <span>📱</span>
-          <span>3. Digital Toolkit + Wayfinding Map</span>
+          <span>Digital Toolkit</span>
+        </button>
+        <button onclick="switchMainView('booklet-preview')" id="nav-btn-booklet-preview" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-600 flex items-center gap-2 transition">
+          <span>📖</span>
+          <span>Printable 8-Page Booklet (A5)</span>
         </button>
       </div>
     </div>
@@ -226,78 +266,37 @@
   <!-- ===================================================================== -->
   <!-- VIEW 1: INTERACTIVE 8-PAGE A5 BOOKLET FLIPBOOK PREVIEW                -->
   <!-- ===================================================================== -->
-  <div id="mode-booklet-preview" class="no-print py-6 px-4 sm:px-6 max-w-7xl mx-auto space-y-6">
+  <div id="mode-booklet-preview" class="hidden no-print py-6 px-4 sm:px-6 max-w-7xl mx-auto space-y-6">
 
-    <!-- Control & Action Header Card -->
+    <!-- Patient-Facing Booklet Header & Easy Print / Download Actions -->
     <div class="bg-white border-2 border-slate-200 rounded-3xl p-5 sm:p-6 shadow-sm space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="space-y-1">
           <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider">
-            8-Page A5 Patient Information Booklet (148 × 210 mm)
+            8-Page A5 Printable Booklet (148 × 210 mm)
           </div>
           <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">
-            My Hospital Toolkit — Interactive Physical Booklet Preview
+            My Hospital Toolkit — Printable Patient Booklet
           </h1>
           <p class="text-xs sm:text-sm text-slate-600">
-            Includes <strong>Hospital Wayfinding &amp; Sign Guide (Pages 2–3)</strong>, <strong>Talk Cards (Page 4)</strong>, and <strong>Checklists (Page 5)</strong>. Displays facing pages on desktop and single pages on mobile.
+            Read each page below or download the print-ready PDF to bring to your appointment.
           </p>
         </div>
 
-        <!-- Primary Print & PDF Actions -->
+        <!-- Primary Patient Print & Download Actions -->
         <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="printBookletNow('imposed')" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-sm">
-            <span>🖨️</span>
-            <span>Print Booklet (A4 Fold &amp; Staple)</span>
-          </button>
-
           <a href="My-Hospital-Toolkit-A5-Booklet.pdf" download class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-sm">
             <span>⬇</span>
-            <span>Download 8-Page A5 PDF</span>
+            <span>Download A5 Booklet (PDF)</span>
           </a>
 
-          <a href="My-Hospital-Toolkit-A4-Imposed-Print.pdf" download class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-            <span>📄</span>
-            <span>A4 Imposed PDF</span>
-          </a>
-        </div>
-      </div>
+          <button onclick="printBookletNow('a5')" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-sm">
+            <span>🖨️</span>
+            <span>Print A5 Booklet</span>
+          </button>
 
-      <!-- Configurable QR Code URL Bar (Updates Cover Page 1 & Back Cover Page 8) -->
-      <div class="pt-3 border-t border-slate-200 grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-        <div class="md:col-span-5">
-          <label for="qr-url-input" class="block text-xs font-extrabold uppercase tracking-wider text-blue-800 mb-1">
-            🔗 Digital Toolkit QR Code URL (Page 1 &amp; Page 8)
-          </label>
-          <input
-            type="text"
-            id="qr-url-input"
-            value="https://michellemiyata.github.io/my-hospital-toolkit/"
-            placeholder="Leave blank for honest QR Placeholder, or paste deployed URL..."
-            oninput="updateQRConfiguration()"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm font-mono text-slate-800"
-          />
-        </div>
-        <div class="md:col-span-3">
-          <label for="qr-short-input" class="block text-xs font-extrabold uppercase tracking-wider text-blue-800 mb-1">
-            Printed Short URL Label
-          </label>
-          <input
-            type="text"
-            id="qr-short-input"
-            value="https://michellemiyata.github.io/my-hospital-toolkit/"
-            oninput="updateQRConfiguration()"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm font-mono text-slate-800"
-          />
-        </div>
-        <div class="md:col-span-4 flex flex-wrap items-center justify-end gap-2">
-          <button onclick="useCurrentBrowserUrl()" class="px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold">
-            Use Current Localhost URL
-          </button>
-          <button onclick="clearQRUrl()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-xs font-bold text-slate-600">
-            Reset Placeholder
-          </button>
           <!-- Desktop Layout Toggle: Facing Spreads vs Single Page -->
-          <button onclick="toggleSinglePageMode()" id="btn-layout-mode" class="hidden md:inline-flex px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold items-center gap-1.5">
+          <button onclick="toggleSinglePageMode()" id="btn-layout-mode" class="hidden md:inline-flex px-3.5 py-2.5 rounded-xl bg-slate-800 text-white text-xs sm:text-sm font-bold items-center gap-1.5">
             <span>📖</span>
             <span id="layout-mode-label">View: Facing Pages</span>
           </button>
@@ -337,27 +336,70 @@
       </div>
     </div>
 
-    <!-- Hybrid Service Design Summary Footer -->
-    <div class="bg-white border-2 border-slate-200 rounded-3xl p-6 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-1">
-        <div class="text-xs font-extrabold uppercase text-blue-700">1. Easy Hospital Wayfinding (Offline &amp; Online)</div>
-        <p class="text-xs text-slate-700 leading-relaxed">
-          Page 2 includes a visual Hospital Signs Key, and Page 3 includes a <strong>"Where I Need to Go"</strong> destination box where reception can circle the patient's color zone, floor, and room.
-        </p>
+    <!-- Collapsible Staff / Pilot Technical Print & QR Setup (Moved away from main patient view) -->
+    <details class="bg-slate-100 border border-slate-300 rounded-2xl p-4 text-slate-700">
+      <summary class="cursor-pointer font-bold text-xs sm:text-sm text-slate-700 flex items-center justify-between">
+        <span>⚙️ Staff &amp; Pilot Setup: A4 Saddle-Stitch Imposition &amp; QR Code Settings</span>
+        <span class="text-xs font-semibold text-slate-500">Optional Technical Controls</span>
+      </summary>
+      <div class="mt-4 pt-4 border-t border-slate-300 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="text-xs text-slate-600">
+            <strong>Booklet Folding &amp; Imposition:</strong> Print two double-sided A4 landscape sheets (<code>[8|1]</code>, <code>[2|7]</code>, <code>[6|3]</code>, <code>[4|5]</code>) to fold and staple into an A5 booklet.
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <a href="My-Hospital-Toolkit-A4-Imposed-Print.pdf" download class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-xs flex items-center gap-1.5">
+              <span>📄</span>
+              <span>Download A4 Imposed PDF</span>
+            </a>
+            <button onclick="printBookletNow('imposed')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-xs flex items-center gap-1.5">
+              <span>🖨️</span>
+              <span>Print A4 Fold &amp; Staple Sheets</span>
+            </button>
+            <button onclick="switchMainView('print-sheets')" id="nav-btn-print-sheets" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1.5">
+              <span>📐</span>
+              <span>Open Print &amp; Imposition Sheet View</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+          <div class="md:col-span-5">
+            <label for="qr-url-input" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+              🔗 Digital Toolkit QR Code URL (Page 1 &amp; Page 8)
+            </label>
+            <input
+              type="text"
+              id="qr-url-input"
+              value="https://michellemiyata.github.io/my-hospital-toolkit/"
+              placeholder="https://michellemiyata.github.io/my-hospital-toolkit/"
+              oninput="updateQRConfiguration()"
+              class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono text-slate-800"
+            />
+          </div>
+          <div class="md:col-span-4">
+            <label for="qr-short-input" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+              Printed Website Address Label
+            </label>
+            <input
+              type="text"
+              id="qr-short-input"
+              value="https://michellemiyata.github.io/my-hospital-toolkit/"
+              oninput="updateQRConfiguration()"
+              class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono text-slate-800"
+            />
+          </div>
+          <div class="md:col-span-3 flex flex-wrap items-center justify-end gap-2">
+            <button onclick="useCurrentBrowserUrl()" class="px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold">
+              Use Current URL
+            </button>
+            <button onclick="clearQRUrl()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-xs font-bold text-slate-600">
+              Reset Default URL
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-1">
-        <div class="text-xs font-extrabold uppercase text-indigo-700">2. Interactive Digital Wayfinding Map</div>
-        <p class="text-xs text-slate-700 leading-relaxed">
-          In the Digital Toolkit, patients can tap any department (Clinics, Blood Test, X-Ray, Pharmacy, Restrooms) for color-coded step-by-step directions and audio Read-Aloud.
-        </p>
-      </div>
-      <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-1">
-        <div class="text-xs font-extrabold uppercase text-emerald-700">3. Ready for Saddle-Stitch A4 Printing</div>
-        <p class="text-xs text-slate-700 leading-relaxed">
-          Imposed into two double-sided A4 sheets (<code>[8|1]</code>, <code>[2|7]</code>, <code>[6|3]</code>, <code>[4|5]</code>) so any hospital printer can print, fold in half, and staple along the spine.
-        </p>
-      </div>
-    </div>
+    </details>
 
   </div>
 
@@ -377,17 +419,20 @@
             8-Page A5 Booklet — Print &amp; Imposition View
           </h2>
           <p class="text-xs sm:text-sm text-slate-600">
-            Choose <strong>A4 Double-Sided Booklet Imposition</strong> (for folding &amp; stapling on A4 paper) or <strong>Sequential A5 Pages (1–8)</strong>.
+            Choose <strong>Sequential A5 Pages (1–8)</strong> or <strong>A4 Double-Sided Booklet Imposition</strong> (for folding &amp; stapling on A4 paper).
           </p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="switchMainView('booklet-preview')" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs">
+            ⬅ Back to Booklet Preview
+          </button>
           <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-300">
-            <button onclick="setPrintLayoutMode('imposed')" id="btn-printmode-imposed" class="px-3 py-1.5 rounded-lg text-xs font-extrabold bg-blue-600 text-white">
-              A4 Saddle-Stitch Imposition (2 Sheets Duplex)
-            </button>
-            <button onclick="setPrintLayoutMode('a5')" id="btn-printmode-a5" class="px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-700 hover:bg-slate-200">
+            <button onclick="setPrintLayoutMode('a5')" id="btn-printmode-a5" class="px-3 py-1.5 rounded-lg text-xs font-extrabold bg-blue-600 text-white">
               Sequential A5 Pages (Pages 1–8)
+            </button>
+            <button onclick="setPrintLayoutMode('imposed')" id="btn-printmode-imposed" class="px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-700 hover:bg-slate-200">
+              A4 Saddle-Stitch Imposition (2 Sheets Duplex)
             </button>
           </div>
 
@@ -399,7 +444,7 @@
       </div>
 
       <!-- Saddle-Stitch Folding & Stapling Guide Diagram -->
-      <div id="imposition-explainer" class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-700">
+      <div id="imposition-explainer" class="hidden p-3.5 rounded-xl bg-blue-50 border border-blue-200 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-700">
         <div>
           <strong class="text-blue-900">How to Print, Fold &amp; Staple on A4 Paper:</strong>
           Print the 4 A4 landscape faces below <strong>double-sided (flip on short edge)</strong> on 2 sheets of A4 paper. Stack Sheet 2 inside Sheet 1, fold in half down the center dashed line to <code>148 × 210 mm</code> (A5), and staple twice along the spine.
@@ -414,21 +459,21 @@
     </div>
 
     <!-- CONTAINER A: A4 SADDLE-STITCH IMPOSED SHEETS ([8|1], [2|7], [6|3], [4|5]) -->
-    <div id="imposed-a4-print-container" class="space-y-8 max-w-[297mm] mx-auto">
+    <div id="imposed-a4-print-container" class="hidden space-y-8 max-w-[297mm] mx-auto">
       <!-- Populated by JS -->
     </div>
 
     <!-- CONTAINER B: SEQUENTIAL 8 A5 PAGES (1, 2, 3, 4, 5, 6, 7, 8) -->
-    <div id="sequential-a5-print-container" class="hidden space-y-8 max-w-[148mm] mx-auto">
+    <div id="sequential-a5-print-container" class="space-y-8 max-w-[148mm] mx-auto">
       <!-- Populated by JS -->
     </div>
 
   </div>
 
   <!-- ===================================================================== -->
-  <!-- VIEW 3: EXISTING DIGITAL TOOLKIT + HOSPITAL WAYFINDING                -->
+  <!-- VIEW 3: MAIN PATIENT-FACING DIGITAL TOOLKIT + HOSPITAL WAYFINDING     -->
   <!-- ===================================================================== -->
-  <div id="mode-digital" class="hidden no-print">
+  <div id="mode-digital" class="no-print">
     <div id="digital-app-container" class="min-h-screen pb-12 transition-colors">
 
       <header class="card bg-white border-b-2 border-slate-200 px-4 py-4">
@@ -439,19 +484,19 @@
             </div>
             <div>
               <h1 class="text-2xl font-bold leading-tight">My Hospital Toolkit</h1>
-              <p class="text-xs sm:text-sm text-slate-500 subtext">Digital Companion · Linked from the 8-Page A5 Patient Booklet</p>
+              <p class="text-xs sm:text-sm text-slate-500 subtext">Plain-Language Outpatient Guide &amp; Printable A5 Booklet</p>
             </div>
           </div>
 
           <div class="flex flex-wrap gap-2">
-            <button onclick="document.body.classList.toggle('large-text')" class="card px-3.5 py-2 rounded-xl border-2 border-slate-300 font-bold text-sm hover:bg-slate-100">
+            <button onclick="toggleAccessibilityMode('large-text', this)" id="btn-a11y-large" aria-pressed="false" class="card px-3.5 py-2 rounded-xl border-2 border-slate-300 font-bold text-sm hover:bg-slate-100">
               🔍 Larger Text
             </button>
-            <button onclick="document.body.classList.toggle('high-contrast')" class="card px-3.5 py-2 rounded-xl border-2 border-slate-300 font-bold text-sm hover:bg-slate-100">
+            <button onclick="toggleAccessibilityMode('high-contrast', this)" id="btn-a11y-contrast" aria-pressed="false" class="card px-3.5 py-2 rounded-xl border-2 border-slate-300 font-bold text-sm hover:bg-slate-100">
               ◐ High Contrast
             </button>
             <button onclick="switchMainView('booklet-preview')" class="px-3.5 py-2 rounded-xl bg-blue-50 text-blue-700 border-2 border-blue-200 font-bold text-sm hover:bg-blue-100">
-              📖 View 8-Page Booklet
+              📖 Printable Booklet (A5)
             </button>
           </div>
         </div>
@@ -474,7 +519,7 @@
             <div class="text-2xl mb-1">✅</div>
             <div class="text-sm sm:text-base">4. Checklist</div>
           </button>
-          <button onclick="showTab('info')" id="tab-info" class="card p-3 rounded-xl border-2 border-slate-300 bg-white font-bold text-left hover:border-blue-400">
+          <button onclick="showTab('info')" id="tab-info" class="card col-span-2 sm:col-span-1 p-3 rounded-xl border-2 border-slate-300 bg-white font-bold text-left hover:border-blue-400">
             <div class="text-2xl mb-1">📖</div>
             <div class="text-sm sm:text-base">5. Easy Info</div>
           </button>
@@ -484,9 +529,9 @@
       <main class="max-w-4xl mx-auto px-4 mt-6">
         <!-- 1. Visit Steps -->
         <section id="view-guide" aria-labelledby="step-title" class="card bg-white border-2 border-slate-200 rounded-2xl p-6 text-center space-y-6 shadow-sm">
-          <div class="flex items-center justify-center gap-2">
+          <div class="flex flex-wrap items-center justify-center gap-2">
             <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wide" id="step-count" aria-live="polite">
-              Stage 1 of 4
+              Before Your Visit · Stage 1 of 4
             </span>
           </div>
           <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto" id="digital-step-dots" role="group" aria-label="Hospital visit stages"></div>
@@ -503,9 +548,17 @@
           <!-- Plain-Language Stage Checklist / Key Actions -->
           <ul id="step-items" class="max-w-xl mx-auto text-left space-y-2.5" aria-label="Key actions for this stage"></ul>
 
+          <!-- Clear Next Step Prompt (Matches Page 3 of Booklet) -->
+          <div id="step-next-prompt" class="hc-callout max-w-xl mx-auto p-3.5 rounded-xl bg-blue-50 border-2 border-blue-200 text-left flex items-start gap-2.5">
+            <span class="text-lg flex-shrink-0" aria-hidden="true">➡</span>
+            <p class="text-sm sm:text-base font-bold text-blue-950 subtext" id="step-next-text">
+              Next: Arrive at Main Reception to check in or ask for directions.
+            </p>
+          </div>
+
           <!-- Contextual Wayfinding Shortcut when on Stage 2 (Finding My Department) -->
-          <div id="step-wayfinding-callout" class="hidden max-w-md mx-auto p-3.5 rounded-xl bg-blue-50 border-2 border-blue-300">
-            <p class="text-sm font-bold text-blue-900 mb-2">Need help finding your clinic, lab, or X-ray room?</p>
+          <div id="step-wayfinding-callout" class="hidden hc-callout max-w-md mx-auto p-3.5 rounded-xl bg-blue-50 border-2 border-blue-300">
+            <p class="text-sm font-bold text-blue-900 subtext mb-2">Need help finding your clinic, lab, or X-ray room?</p>
             <button onclick="showTab('wayfinding')" class="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold text-sm">
               🧭 Open Hospital Wayfinding Guide
             </button>
@@ -524,23 +577,36 @@
           </div>
         </section>
 
-        <!-- 2. HOSPITAL WAYFINDING & NAVIGATION GUIDE (New!) -->
+        <!-- 2. HOSPITAL WAYFINDING & NAVIGATION GUIDE -->
         <section id="view-wayfinding" class="hidden space-y-5">
           <!-- Where Am I Going? Interactive Destination Selector -->
           <div class="card bg-white border-2 border-slate-200 rounded-2xl p-6 space-y-5 shadow-sm">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-100 pb-4">
               <div>
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase">
-                  Color-Coded Hospital Navigation
-                </span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase">
+                    Colour-Coded Hospital Navigation
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-xs font-extrabold uppercase">
+                    Demonstration Examples
+                  </span>
+                </div>
                 <h2 class="text-2xl font-extrabold mt-1">Where Do You Need to Go?</h2>
                 <p class="text-slate-600 subtext text-sm sm:text-base">
-                  Tap a hospital area below to see the color line to follow, floor level, and simple step-by-step directions.
+                  Tap a hospital area below to see the example colour zone, floor level, and simple step-by-step directions.
                 </p>
               </div>
               <button onclick="speakActiveWayfinding()" class="px-4 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center gap-2">
                 <span>🔊</span><span>Read Directions Aloud</span>
               </button>
+            </div>
+
+            <!-- Clear Demonstration Example Notice -->
+            <div class="hc-callout p-3.5 rounded-xl bg-amber-50 border-2 border-amber-300 flex items-start gap-3 text-left">
+              <span class="text-xl flex-shrink-0" aria-hidden="true">ℹ️</span>
+              <p class="text-xs sm:text-sm font-bold text-amber-950 subtext leading-snug">
+                <strong>Demonstration Example:</strong> These colour-coded zones, floor levels, and directions are outpatient pilot examples. Actual hospital signs and layouts may differ—always check with Main Reception when you arrive.
+              </p>
             </div>
 
             <!-- Destination Buttons Grid -->
@@ -556,9 +622,14 @@
 
           <!-- Visual Hospital Signs Key -->
           <div class="card bg-white border-2 border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
-            <div>
-              <h3 class="text-xl font-extrabold">What Hospital Signs Mean</h3>
-              <p class="text-slate-600 subtext text-sm">Look for these symbols on hospital walls and overhead signs. Tap any sign to hear it read aloud.</p>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="text-xl font-extrabold">What Hospital Signs Mean</h3>
+                <p class="text-slate-600 subtext text-sm">Look for these symbols on hospital walls and overhead signs. Tap any sign to hear it read aloud.</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-xs font-extrabold">
+                Example Signs &amp; Zones
+              </span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="wayfinding-signs-grid">
               <!-- Populated by JS -->
@@ -590,11 +661,11 @@
             <p class="text-slate-600 subtext">Tap each box to check it off—or mark it with a pen on Page 5 of your booklet.</p>
           </div>
           <div class="space-y-3">
-            <h3 class="text-base font-extrabold uppercase tracking-wider text-blue-700 subtext">🎒 Before My Visit</h3>
+            <h3 class="text-base font-extrabold uppercase tracking-wider text-blue-700 subtext">🎒 Before My Visit (Stage 1)</h3>
             <div id="checklist-before-list" class="space-y-2.5"></div>
           </div>
           <div class="space-y-3 pt-2 border-t-2 border-slate-100">
-            <h3 class="text-base font-extrabold uppercase tracking-wider text-emerald-700 subtext">🏡 Before I Leave</h3>
+            <h3 class="text-base font-extrabold uppercase tracking-wider text-emerald-700 subtext">🏡 Before I Leave (Stage 4: After My Appointment)</h3>
             <div id="checklist-leave-list" class="space-y-2.5"></div>
           </div>
         </section>
@@ -625,46 +696,54 @@
     // =========================================================================
     const STEPS = [
       {
+        phase: 'Before Your Visit',
         icon: '🎒',
         title: 'Before My Visit',
-        desc: 'Get ready at home and bring what you need for your appointment.',
+        desc: 'Get ready at home and pack what you need for your outpatient appointment.',
         items: [
           'Bring your health card and photo ID.',
           'Bring your appointment letter or clinic details.',
           'Bring a list of the medicines you take.',
           'Bring glasses, hearing aids, mobility aids, or a support person if needed.'
-        ]
+        ],
+        nextPrompt: 'Next: Arrive at Main Reception to check in or ask for directions.'
       },
       {
+        phase: 'During Your Visit',
         icon: '🧭',
         title: 'Finding My Department',
-        desc: 'Follow the colour-coded signs or ask staff to help you find your Zone, Floor, and Room.',
+        desc: 'Ask reception to mark your destination box (Page 3), then follow the hospital signs to your Zone, Floor, and Room.',
         items: [
           'Stop at Main Reception if you are not sure where to go.',
-          'Follow the colour lines, floor numbers, and signs on the walls.',
-          'Ask staff to write down or circle your Zone, Floor, and Room in your booklet.'
-        ]
+          'Ask staff to circle your Zone and write down your Floor and Room in your booklet.',
+          'Follow the hospital signs and example colour lines to your department.'
+        ],
+        nextPrompt: 'Next: Go to your department check-in desk.'
       },
       {
+        phase: 'During Your Visit',
         icon: '🪪',
         title: 'Checking In & Waiting',
-        desc: 'Go to your clinic desk to check in, then wait in the seating area until staff call your name.',
+        desc: 'Check in at your clinic desk, tell staff if you need support, and wait until your name is called.',
         items: [
-          'Show your health card and appointment details at the check-in desk.',
-          'Let staff know if you need extra time, quiet waiting, or communication support.',
-          'Sit in the waiting area until staff call your name.'
-        ]
+          'Show your health card and appointment details at the clinic desk.',
+          'Point to a Talk Card (Page 4) if you need staff to speak slowly or write things down.',
+          'Sit in the waiting area (or ask for a quiet waiting spot) until staff call your name.'
+        ],
+        nextPrompt: 'Next: Meet with your care team and ask any questions from Page 7.'
       },
       {
+        phase: 'After Your Visit',
         icon: '📋',
         title: 'After My Appointment',
         desc: 'Make sure you understand your care instructions and next steps before going home.',
         items: [
-          'Ask what happens next and if you need another appointment or test.',
-          'Ask staff to write down important instructions in everyday words.',
+          'Ask "What happens next?" and if you need another appointment or test.',
+          'Ask staff to write down your instructions in everyday words.',
           'Check if you need to pick up medicine at the pharmacy before leaving.',
-          'Make sure you know who to contact if you have questions at home.'
-        ]
+          'Review the Before I Leave checklist (Page 5) and know who to call with questions.'
+        ],
+        nextPrompt: 'Next: Complete your Before I Leave checklist before heading home.'
       }
     ];
 
@@ -772,8 +851,8 @@
       { icon: '🛗', label: 'Elevators / Lifts', desc: 'Step-free access to all floors' },
       { icon: '🚻', label: 'Accessible Restroom', desc: 'Wheelchair-friendly toilet nearby' },
       { icon: '🪑', label: 'Waiting Area', desc: 'Sit here until staff call your name' },
-      { icon: '🩸', label: 'Blood Tests / Lab', desc: 'Green Zone sample collection' },
-      { icon: '📷', label: 'X-Ray & Scans', desc: 'Amber Zone radiology & imaging' },
+      { icon: '🩸', label: 'Blood Tests / Lab', desc: 'Example Green Zone sample collection' },
+      { icon: '📷', label: 'X-Ray & Scans', desc: 'Example Amber Zone radiology & imaging' },
       { icon: '💊', label: 'Pharmacy', desc: 'Pick up your medicine before leaving' },
       { icon: '🚪', label: 'Way Out / Main Exit', desc: 'Pick-up area, transit & taxis' }
     ];
@@ -1222,10 +1301,10 @@
                   <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
                     <span>🪧</span><span>Hospital Signs to Look For</span>
                   </h3>
-                  <span class="text-[9.5px] font-extrabold px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">Example Zones</span>
+                  <span class="text-[9.5px] font-extrabold px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">Demonstration Examples</span>
                 </div>
                 <p class="text-[10px] text-slate-700 leading-snug">
-                  Look for these symbols and colour zones on hospital walls. <strong>Note:</strong> Colour zones and directions are examples and may differ between hospitals.
+                  Look for these symbols and colour zones on hospital walls. <strong>Note:</strong> Colour zones and directions are demonstration examples and may differ between hospitals.
                 </p>
                 <div class="grid grid-cols-4 gap-1.5 text-center">
                   <div class="p-1.5 rounded-lg bg-white border border-slate-300">
@@ -1391,7 +1470,7 @@
                 </div>
 
                 <div class="text-[9.5px] font-bold text-slate-800 text-center leading-tight">
-                  👆 <strong>Show this box to staff if you need directions.</strong> <em>(Zones above are examples and may vary by hospital.)</em>
+                  👆 <strong>Show this box to staff if you need directions.</strong> <em>(Zones above are demonstration examples and may vary by hospital.)</em>
                 </div>
               </div>
             </div>
@@ -1720,7 +1799,7 @@
               <div class="p-3 rounded-2xl bg-white border-2 border-slate-300 space-y-1">
                 <div class="text-xs font-extrabold uppercase tracking-wider text-blue-800">Outpatient Pilot Prototype Note</div>
                 <p class="text-[11px] text-slate-800 leading-relaxed">
-                  <strong>My Hospital Toolkit</strong> helps you prepare at home, find your department, communicate with staff, and understand your next steps. Wayfinding colour zones and directions in this booklet are examples and may differ between hospitals.
+                  <strong>My Hospital Toolkit</strong> helps you prepare at home, find your department, communicate with staff, and understand your next steps. Wayfinding colour zones and directions in this booklet are demonstration examples and may differ between hospitals.
                 </p>
               </div>
 
@@ -1930,6 +2009,7 @@
       const imposedContainer = document.getElementById('imposed-a4-print-container');
       const seqContainer = document.getElementById('sequential-a5-print-container');
       const explainer = document.getElementById('imposition-explainer');
+      const pageStyle = document.getElementById('dynamic-print-page-style');
 
       document.body.classList.remove('print-mode-imposed', 'print-mode-a5');
       if (mode === 'imposed') {
@@ -1939,6 +2019,7 @@
         explainer.classList.remove('hidden');
         imposedBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-blue-600 text-white';
         a5Btn.className = 'px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-700 hover:bg-slate-200';
+        if (pageStyle) pageStyle.textContent = '@page { size: A4 landscape; margin: 0; }';
       } else {
         document.body.classList.add('print-mode-a5');
         imposedContainer.classList.add('hidden');
@@ -1946,10 +2027,11 @@
         explainer.classList.add('hidden');
         a5Btn.className = 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-blue-600 text-white';
         imposedBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-700 hover:bg-slate-200';
+        if (pageStyle) pageStyle.textContent = '@page { size: A5 portrait; margin: 0; }';
       }
     }
 
-    function printBookletNow(mode = 'imposed') {
+    function printBookletNow(mode = 'a5') {
       setPrintLayoutMode(mode);
       window.print();
     }
@@ -1961,6 +2043,7 @@
       ['booklet-preview', 'print-sheets', 'digital'].forEach(v => {
         document.getElementById('mode-' + v).classList.toggle('hidden', v !== view);
         const btn = document.getElementById('nav-btn-' + v);
+        if (!btn || v === 'print-sheets') return;
         if (v === view) {
           btn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white flex items-center gap-2 transition shadow-sm';
         } else {
@@ -1971,8 +2054,8 @@
     }
 
     function updateQRConfiguration() {
-      currentQRUrl = document.getElementById('qr-url-input').value.trim();
-      currentShortUrl = document.getElementById('qr-short-input').value.trim() || '[your-hospital-url]/toolkit';
+      currentQRUrl = document.getElementById('qr-url-input').value.trim() || 'https://michellemiyata.github.io/my-hospital-toolkit/';
+      currentShortUrl = document.getElementById('qr-short-input').value.trim() || 'https://michellemiyata.github.io/my-hospital-toolkit/';
       renderInteractiveFlipbook();
       renderAllPrintContainers();
     }
@@ -1980,14 +2063,23 @@
     function useCurrentBrowserUrl() {
       const currentUrl = window.location.origin + window.location.pathname;
       document.getElementById('qr-url-input').value = currentUrl;
-      document.getElementById('qr-short-input').value = currentUrl.replace(/^https?:\/\//, '');
+      document.getElementById('qr-short-input').value = currentUrl;
       updateQRConfiguration();
     }
 
     function clearQRUrl() {
-      document.getElementById('qr-url-input').value = '';
-      document.getElementById('qr-short-input').value = '[your-hospital-url]/toolkit';
+      document.getElementById('qr-url-input').value = 'https://michellemiyata.github.io/my-hospital-toolkit/';
+      document.getElementById('qr-short-input').value = 'https://michellemiyata.github.io/my-hospital-toolkit/';
       updateQRConfiguration();
+    }
+
+    function toggleAccessibilityMode(cls, btn) {
+      const active = document.body.classList.toggle(cls);
+      if (btn) {
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        btn.classList.toggle('ring-2', active);
+        btn.classList.toggle('ring-blue-500', active);
+      }
     }
 
     // =========================================================================
@@ -2005,10 +2097,11 @@
       ['guide', 'wayfinding', 'cards', 'checklist', 'info'].forEach(t => {
         document.getElementById('view-' + t).classList.toggle('hidden', t !== tab);
         const btn = document.getElementById('tab-' + t);
+        const spanClass = t === 'info' ? 'col-span-2 sm:col-span-1 ' : '';
         if (t === tab) {
-          btn.className = 'p-3 rounded-xl border-2 border-blue-600 bg-blue-600 text-white font-bold text-left';
+          btn.className = spanClass + 'p-3 rounded-xl border-2 border-blue-600 bg-blue-600 text-white font-bold text-left';
         } else {
-          btn.className = 'card p-3 rounded-xl border-2 border-slate-300 bg-white font-bold text-left hover:border-blue-400';
+          btn.className = 'card ' + spanClass + 'p-3 rounded-xl border-2 border-slate-300 bg-white font-bold text-left hover:border-blue-400';
         }
       });
     }
@@ -2017,10 +2110,11 @@
 
     function renderStep() {
       const s = STEPS[stepIdx];
-      document.getElementById('step-count').textContent = `Stage ${stepIdx + 1} of ${STEPS.length}`;
+      document.getElementById('step-count').textContent = `${s.phase} · Stage ${stepIdx + 1} of ${STEPS.length}`;
       document.getElementById('step-icon').textContent = s.icon;
       document.getElementById('step-title').textContent = `${stepIdx + 1}. ${s.title}`;
       document.getElementById('step-desc').textContent = s.desc;
+      document.getElementById('step-next-text').textContent = s.nextPrompt || '';
       document.getElementById('btn-prev').disabled = stepIdx === 0;
       document.getElementById('btn-next').textContent = stepIdx === STEPS.length - 1 ? 'Start Over ↺' : 'Next ➡';
 
@@ -2062,7 +2156,7 @@
     function speakStep() {
       const s = STEPS[stepIdx];
       const details = (s.items || []).join(' ');
-      speak(`Stage ${stepIdx + 1}: ${s.title}. ${s.desc} ${details}`);
+      speak(`${s.phase}. Stage ${stepIdx + 1}: ${s.title}. ${s.desc} ${details} ${s.nextPrompt || ''}`);
     }
 
     // Digital Wayfinding Interactive Logic
@@ -2079,7 +2173,7 @@
         }">
           <span class="text-3xl flex-shrink-0">${item.icon}</span>
           <div>
-            <div class="text-xs font-extrabold text-blue-700 subtext">${item.zoneBadge}</div>
+            <div class="text-xs font-extrabold text-blue-700 subtext">${item.zoneBadge} (Example)</div>
             <div class="font-extrabold text-sm sm:text-base leading-snug">${item.name}</div>
             <div class="text-xs text-slate-500 subtext">${item.floor}</div>
           </div>
@@ -2093,8 +2187,13 @@
               ${z.icon}
             </div>
             <div>
-              <div class="inline-block px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-white border border-slate-300 text-slate-900 mb-0.5">
-                ${z.zoneBadge} · ${z.floor} · Near ${z.landmark}
+              <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+                <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-white border border-slate-300 text-slate-900">
+                  ${z.zoneBadge} · ${z.floor} · Near ${z.landmark}
+                </span>
+                <span class="inline-block px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-amber-100 border border-amber-300 text-amber-950">
+                  Demonstration Example
+                </span>
               </div>
               <h3 class="text-xl sm:text-2xl font-extrabold">${z.name}</h3>
             </div>
@@ -2144,7 +2243,7 @@
 
     function speakActiveWayfinding() {
       const z = WAYFINDING_ZONES[activeZoneIdx];
-      speak(`Directions to ${z.name}. ${z.zoneBadge}, ${z.floor}. Step 1: ${z.steps[0]} Step 2: ${z.steps[1]} Step 3: ${z.steps[2]}`);
+      speak(`Demonstration example directions to ${z.name}. ${z.zoneBadge}, ${z.floor}. Step 1: ${z.steps[0]} Step 2: ${z.steps[1]} Step 3: ${z.steps[2]}. Note: Actual hospital directions may vary.`);
     }
 
     let activeCardText = 'Tap any card below to speak';
