@@ -259,6 +259,10 @@
           <span>📖</span>
           <span>Printable 8-Page Booklet (A5)</span>
         </button>
+        <a href="My-Hospital-Toolkit-A5-Booklet.pdf" download class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1.5 transition shadow-sm">
+          <span>⬇</span>
+          <span>Download Booklet PDF</span>
+        </a>
       </div>
     </div>
   </div>
@@ -279,7 +283,7 @@
             My Hospital Toolkit — Printable Patient Booklet
           </h1>
           <p class="text-xs sm:text-sm text-slate-600">
-            Read each page below or download the print-ready PDF to bring to your appointment.
+            Preview all 8 pages below, print at home, or download the A5 PDF to bring to your appointment.
           </p>
         </div>
 
@@ -301,6 +305,14 @@
             <span id="layout-mode-label">View: Facing Pages</span>
           </button>
         </div>
+      </div>
+
+      <!-- Clear Wayfinding Demonstration Disclaimer -->
+      <div class="p-3 rounded-xl bg-amber-50 border border-amber-300 flex items-start gap-2.5 text-xs text-amber-950">
+        <span class="text-base flex-shrink-0" aria-hidden="true">ℹ️</span>
+        <p class="leading-snug">
+          <strong>Disclaimer:</strong> Colour-coded hospital zones and directions shown in this booklet are <strong>demonstration examples</strong> for this outpatient pilot prototype. Actual hospital signs and directions may vary.
+        </p>
       </div>
     </div>
 
@@ -336,97 +348,78 @@
       </div>
     </div>
 
-    <!-- Collapsible Staff / Pilot Technical Print & QR Setup (Moved away from main patient view) -->
-    <details class="bg-slate-100 border border-slate-300 rounded-2xl p-4 text-slate-700">
-      <summary class="cursor-pointer font-bold text-xs sm:text-sm text-slate-700 flex items-center justify-between">
-        <span>⚙️ Staff &amp; Pilot Setup: A4 Saddle-Stitch Imposition &amp; QR Code Settings</span>
-        <span class="text-xs font-semibold text-slate-500">Optional Technical Controls</span>
-      </summary>
-      <div class="mt-4 pt-4 border-t border-slate-300 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="text-xs text-slate-600">
-            <strong>Booklet Folding &amp; Imposition:</strong> Print two double-sided A4 landscape sheets (<code>[8|1]</code>, <code>[2|7]</code>, <code>[6|3]</code>, <code>[4|5]</code>) to fold and staple into an A5 booklet.
-          </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <a href="My-Hospital-Toolkit-A4-Imposed-Print.pdf" download class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-xs flex items-center gap-1.5">
-              <span>📄</span>
-              <span>Download A4 Imposed PDF</span>
-            </a>
-            <button onclick="printBookletNow('imposed')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-xs flex items-center gap-1.5">
-              <span>🖨️</span>
-              <span>Print A4 Fold &amp; Staple Sheets</span>
-            </button>
-            <button onclick="switchMainView('print-sheets')" id="nav-btn-print-sheets" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1.5">
-              <span>📐</span>
-              <span>Open Print &amp; Imposition Sheet View</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-slate-200 grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-          <div class="md:col-span-5">
-            <label for="qr-url-input" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-              🔗 Digital Toolkit QR Code URL (Page 1 &amp; Page 8)
-            </label>
-            <input
-              type="text"
-              id="qr-url-input"
-              value="https://michellemiyata.github.io/my-hospital-toolkit/"
-              placeholder="https://michellemiyata.github.io/my-hospital-toolkit/"
-              oninput="updateQRConfiguration()"
-              class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono text-slate-800"
-            />
-          </div>
-          <div class="md:col-span-4">
-            <label for="qr-short-input" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-              Printed Website Address Label
-            </label>
-            <input
-              type="text"
-              id="qr-short-input"
-              value="https://michellemiyata.github.io/my-hospital-toolkit/"
-              oninput="updateQRConfiguration()"
-              class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono text-slate-800"
-            />
-          </div>
-          <div class="md:col-span-3 flex flex-wrap items-center justify-end gap-2">
-            <button onclick="useCurrentBrowserUrl()" class="px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold">
-              Use Current URL
-            </button>
-            <button onclick="clearQRUrl()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-xs font-bold text-slate-600">
-              Reset Default URL
-            </button>
-          </div>
-        </div>
-      </div>
-    </details>
-
   </div>
 
   <!-- ===================================================================== -->
-  <!-- VIEW 2: PRINT & A4 IMPOSITION SHEETS (Saddle-Stitch + Sequential A5)  -->
+  <!-- VIEW 2: SEPARATE DEVELOPER & ADVANCED PRINT CONFIGURATION SECTION     -->
   <!-- ===================================================================== -->
   <div id="mode-print-sheets" class="hidden py-6 px-4 bg-slate-200 min-h-screen">
 
-    <!-- Print Configuration Toolbar (Hidden when printing) -->
-    <div class="no-print max-w-[297mm] mx-auto mb-6 bg-white border-2 border-slate-300 rounded-2xl p-5 shadow-sm space-y-4">
+    <!-- Developer QR & Advanced Print Configuration Panel (Hidden when printing) -->
+    <div class="no-print max-w-[297mm] mx-auto mb-6 bg-white border-2 border-slate-300 rounded-2xl p-5 shadow-sm space-y-5">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase">
-            Print-Ready Booklet Output
+          <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-white text-xs font-extrabold uppercase">
+            Developer &amp; Print Configuration
           </span>
           <h2 class="text-xl font-extrabold text-slate-900 mt-1">
-            8-Page A5 Booklet — Print &amp; Imposition View
+            Technical QR Settings &amp; Advanced Print Imposition
           </h2>
           <p class="text-xs sm:text-sm text-slate-600">
-            Choose <strong>Sequential A5 Pages (1–8)</strong> or <strong>A4 Double-Sided Booklet Imposition</strong> (for folding &amp; stapling on A4 paper).
+            Configure QR code destination URLs or switch between <strong>Sequential A5 Pages (1–8)</strong> and <strong>A4 Saddle-Stitch Imposition</strong>.
           </p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="switchMainView('booklet-preview')" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs">
-            ⬅ Back to Booklet Preview
+          <button onclick="switchMainView('digital')" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs">
+            ⬅ Back to Patient Toolkit
           </button>
+          <button onclick="switchMainView('booklet-preview')" class="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 font-bold text-xs">
+            📖 Booklet Preview
+          </button>
+        </div>
+      </div>
+
+      <!-- Technical QR Code Configuration -->
+      <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+        <div class="md:col-span-5">
+          <label for="qr-url-input" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+            🔗 Digital Toolkit QR Code URL (Page 1 &amp; Page 8)
+          </label>
+          <input
+            type="text"
+            id="qr-url-input"
+            value="https://michellemiyata.github.io/my-hospital-toolkit/"
+            placeholder="https://michellemiyata.github.io/my-hospital-toolkit/"
+            oninput="updateQRConfiguration()"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono text-slate-800"
+          />
+        </div>
+        <div class="md:col-span-4">
+          <label for="qr-short-input" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+            Printed Website Address Label
+          </label>
+          <input
+            type="text"
+            id="qr-short-input"
+            value="https://michellemiyata.github.io/my-hospital-toolkit/"
+            oninput="updateQRConfiguration()"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono text-slate-800"
+          />
+        </div>
+        <div class="md:col-span-3 flex flex-wrap items-center justify-end gap-2">
+          <button onclick="useCurrentBrowserUrl()" class="px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold">
+            Use Current URL
+          </button>
+          <button onclick="clearQRUrl()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-xs font-bold text-slate-600">
+            Reset Default URL
+          </button>
+        </div>
+      </div>
+
+      <!-- Advanced Print Imposition Controls -->
+      <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2">
           <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-300">
             <button onclick="setPrintLayoutMode('a5')" id="btn-printmode-a5" class="px-3 py-1.5 rounded-lg text-xs font-extrabold bg-blue-600 text-white">
               Sequential A5 Pages (Pages 1–8)
@@ -435,12 +428,16 @@
               A4 Saddle-Stitch Imposition (2 Sheets Duplex)
             </button>
           </div>
-
-          <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm flex items-center gap-2 shadow-sm">
-            <span>🖨️</span>
-            <span>Print Booklet / Save PDF</span>
-          </button>
+          <a href="My-Hospital-Toolkit-A4-Imposed-Print.pdf" download class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs flex items-center gap-1.5">
+            <span>📄</span>
+            <span>Download A4 Imposed PDF</span>
+          </a>
         </div>
+
+        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm flex items-center gap-2 shadow-sm">
+          <span>🖨️</span>
+          <span>Print Selected Layout</span>
+        </button>
       </div>
 
       <!-- Saddle-Stitch Folding & Stapling Guide Diagram -->
@@ -498,6 +495,9 @@
             <button onclick="switchMainView('booklet-preview')" class="px-3.5 py-2 rounded-xl bg-blue-50 text-blue-700 border-2 border-blue-200 font-bold text-sm hover:bg-blue-100">
               📖 Printable Booklet (A5)
             </button>
+            <a href="My-Hospital-Toolkit-A5-Booklet.pdf" download class="px-3.5 py-2 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-700 flex items-center gap-1">
+              <span>⬇</span><span>Download PDF</span>
+            </a>
           </div>
         </div>
 
@@ -601,11 +601,11 @@
               </button>
             </div>
 
-            <!-- Clear Demonstration Example Notice -->
-            <div class="hc-callout p-3.5 rounded-xl bg-amber-50 border-2 border-amber-300 flex items-start gap-3 text-left">
+            <!-- Clear Demonstration Example Disclaimer -->
+            <div class="hc-callout p-3.5 rounded-xl bg-amber-50 border-2 border-amber-300 flex items-start gap-3 text-left" role="note">
               <span class="text-xl flex-shrink-0" aria-hidden="true">ℹ️</span>
               <p class="text-xs sm:text-sm font-bold text-amber-950 subtext leading-snug">
-                <strong>Demonstration Example:</strong> These colour-coded zones, floor levels, and directions are outpatient pilot examples. Actual hospital signs and layouts may differ—always check with Main Reception when you arrive.
+                <strong>Disclaimer:</strong> Colour-coded hospital zones, floor levels, and directions are <strong>demonstration examples</strong> for this outpatient pilot prototype. Actual hospital signs and layouts may differ—always check with Main Reception when you arrive.
               </p>
             </div>
 
@@ -683,9 +683,41 @@
           </div>
           <div class="space-y-3.5" id="digital-info-list"></div>
         </section>
+
+        <!-- Global Demonstration Disclaimer Card -->
+        <aside class="card mt-6 bg-amber-50/80 border-2 border-amber-300 rounded-2xl p-4 flex items-start gap-3 text-left" aria-label="Wayfinding Demonstration Disclaimer">
+          <span class="text-xl flex-shrink-0" aria-hidden="true">ℹ️</span>
+          <p class="text-xs sm:text-sm text-amber-950 subtext leading-snug">
+            <strong>Disclaimer:</strong> Colour-coded hospital zones and directions in this toolkit and printable booklet are <strong>demonstration examples</strong> for an outpatient pilot prototype. Actual hospital signs and directions may vary.
+          </p>
+        </aside>
       </main>
     </div>
   </div>
+
+  <!-- ===================================================================== -->
+  <!-- FOOTER: QUICK BOOKLET ACCESS & SEPARATE DEVELOPER SECTION LINK        -->
+  <!-- ===================================================================== -->
+  <footer class="no-print border-t border-slate-300 bg-white px-4 py-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
+      <div>
+        <strong>My Hospital Toolkit (Version 2)</strong> · Outpatient Pilot Prototype · Wayfinding zones and directions are demonstration examples.
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <button onclick="switchMainView('booklet-preview')" class="font-bold text-blue-700 hover:underline">
+          📖 Printable Booklet Preview
+        </button>
+        <span>·</span>
+        <a href="My-Hospital-Toolkit-A5-Booklet.pdf" download class="font-bold text-emerald-700 hover:underline">
+          ⬇ Download A5 Booklet (PDF)
+        </a>
+        <span>·</span>
+        <button onclick="switchMainView('print-sheets')" id="nav-btn-print-sheets" class="font-semibold text-slate-500 hover:text-slate-800 hover:underline">
+          🛠️ Developer &amp; Print Configuration
+        </button>
+      </div>
+    </div>
+  </footer>
 
   <!-- ===================================================================== -->
   <!-- SCRIPTS: 8-PAGE A5 BOOKLET GENERATOR, WAYFINDING, FLIPBOOK & QR CODE  -->
