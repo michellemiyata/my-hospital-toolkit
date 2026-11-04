@@ -284,7 +284,7 @@
           <input
             type="text"
             id="qr-short-input"
-            value="michellemiyata.github.io/my-hospital-toolkit"
+            value="https://michellemiyata.github.io/my-hospital-toolkit/"
             oninput="updateQRConfiguration()"
             class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm font-mono text-slate-800"
           />
@@ -483,24 +483,27 @@
 
       <main class="max-w-4xl mx-auto px-4 mt-6">
         <!-- 1. Visit Steps -->
-        <section id="view-guide" class="card bg-white border-2 border-slate-200 rounded-2xl p-6 text-center space-y-6 shadow-sm">
+        <section id="view-guide" aria-labelledby="step-title" class="card bg-white border-2 border-slate-200 rounded-2xl p-6 text-center space-y-6 shadow-sm">
           <div class="flex items-center justify-center gap-2">
-            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wide" id="step-count">
-              Step 1 of 4
+            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wide" id="step-count" aria-live="polite">
+              Stage 1 of 4
             </span>
           </div>
-          <div class="flex items-center justify-center gap-2 max-w-md mx-auto" id="digital-step-dots"></div>
-          <div class="w-32 h-32 mx-auto rounded-3xl bg-blue-50 border-2 border-blue-200 flex items-center justify-center text-7xl" id="step-icon">
-            🪪
+          <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto" id="digital-step-dots" role="group" aria-label="Hospital visit stages"></div>
+          <div class="w-32 h-32 mx-auto rounded-3xl bg-blue-50 border-2 border-blue-200 flex items-center justify-center text-7xl" id="step-icon" aria-hidden="true">
+            🎒
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold" id="step-title">
-            1. Check In
+            1. Before My Visit
           </h2>
           <p class="text-lg sm:text-xl text-slate-600 subtext max-w-xl mx-auto leading-relaxed" id="step-desc">
-            Go to reception and show your health card or appointment details.
+            Get ready at home and bring what you need for your appointment.
           </p>
 
-          <!-- Contextual Wayfinding Shortcut when on Step 2 -->
+          <!-- Plain-Language Stage Checklist / Key Actions -->
+          <ul id="step-items" class="max-w-xl mx-auto text-left space-y-2.5" aria-label="Key actions for this stage"></ul>
+
+          <!-- Contextual Wayfinding Shortcut when on Stage 2 (Finding My Department) -->
           <div id="step-wayfinding-callout" class="hidden max-w-md mx-auto p-3.5 rounded-xl bg-blue-50 border-2 border-blue-300">
             <p class="text-sm font-bold text-blue-900 mb-2">Need help finding your clinic, lab, or X-ray room?</p>
             <button onclick="showTab('wayfinding')" class="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold text-sm">
@@ -622,24 +625,46 @@
     // =========================================================================
     const STEPS = [
       {
-        icon: '🪪',
-        title: 'Check In',
-        desc: 'Go to reception and show your health card or appointment details.'
+        icon: '🎒',
+        title: 'Before My Visit',
+        desc: 'Get ready at home and bring what you need for your appointment.',
+        items: [
+          'Bring your health card and photo ID.',
+          'Bring your appointment letter or clinic details.',
+          'Bring a list of the medicines you take.',
+          'Bring glasses, hearing aids, mobility aids, or a support person if needed.'
+        ]
       },
       {
         icon: '🧭',
-        title: 'Find Your Department',
-        desc: 'Follow the color-coded signs or ask staff to mark your Zone, Floor, and Room in this booklet.'
+        title: 'Finding My Department',
+        desc: 'Follow the colour-coded signs or ask staff to help you find your Zone, Floor, and Room.',
+        items: [
+          'Stop at Main Reception if you are not sure where to go.',
+          'Follow the colour lines, floor numbers, and signs on the walls.',
+          'Ask staff to write down or circle your Zone, Floor, and Room in your booklet.'
+        ]
       },
       {
-        icon: '🪑',
-        title: 'Wait for Your Appointment',
-        desc: 'Wait in the designated area until staff call you.'
+        icon: '🪪',
+        title: 'Checking In & Waiting',
+        desc: 'Go to your clinic desk to check in, then wait in the seating area until staff call your name.',
+        items: [
+          'Show your health card and appointment details at the check-in desk.',
+          'Let staff know if you need extra time, quiet waiting, or communication support.',
+          'Sit in the waiting area until staff call your name.'
+        ]
       },
       {
         icon: '📋',
-        title: 'Understand Your Next Steps',
-        desc: 'Ask about follow-up care and instructions before leaving.'
+        title: 'After My Appointment',
+        desc: 'Make sure you understand your care instructions and next steps before going home.',
+        items: [
+          'Ask what happens next and if you need another appointment or test.',
+          'Ask staff to write down important instructions in everyday words.',
+          'Check if you need to pick up medicine at the pharmacy before leaving.',
+          'Make sure you know who to contact if you have questions at home.'
+        ]
       }
     ];
 
@@ -755,7 +780,7 @@
 
     const CARDS = [
       { icon: '🐢', text: 'Please speak slowly.' },
-      { icon: '✍️', text: 'Please write it down.' },
+      { icon: '✍️', text: 'Please write that down.' },
       { icon: '🤔', text: "I don't understand." },
       { icon: '⚡', text: 'I am in pain.' },
       { icon: '✋', text: 'I need a break.' },
@@ -782,27 +807,27 @@
       {
         icon: '✍️',
         title: 'Ask for Written Information',
-        desc: 'You can ask staff to write down key instructions, appointment dates, or care steps so you can review them later.'
+        desc: 'Ask staff to write down your instructions, dates, or next steps so you can read them later.'
       },
       {
         icon: '🗣️',
         title: 'Request Simpler Explanations',
-        desc: 'If medical words feel overwhelming, ask staff to explain using everyday words or repeat the main points slowly.'
+        desc: 'If medical words feel overwhelming, ask staff to use everyday words and speak slowly.'
       },
       {
         icon: '🦻',
         title: 'Ask About Accessible Communication',
-        desc: 'Let reception or clinic staff know if you use Talk Cards, hearing supports, or need extra time to communicate.'
+        desc: 'Tell staff if you use Talk Cards, hearing supports, or need extra time to communicate.'
       },
       {
         icon: '🤝',
         title: 'Ask About Having a Support Person',
-        desc: 'You can ask staff about having a family member, friend, or support person join you to help listen and ask questions.'
+        desc: 'Ask if a family member, friend, or support person can join you to listen and ask questions.'
       },
       {
         icon: '✅',
         title: 'Clarify Your Next Steps Before Leaving',
-        desc: 'Before going home, check what happens next, whether you need follow-up visits, and who to contact with questions.'
+        desc: 'Before going home, ask what happens next, if you need follow-up visits, and who to call for help.'
       }
     ];
 
@@ -810,7 +835,7 @@
     // 2. CONFIGURABLE QR CODE GENERATOR (Real Scannable QR + Honest Placeholder)
     // =========================================================================
     let currentQRUrl = 'https://michellemiyata.github.io/my-hospital-toolkit/';
-    let currentShortUrl = 'michellemiyata.github.io/my-hospital-toolkit';
+    let currentShortUrl = 'https://michellemiyata.github.io/my-hospital-toolkit/';
 
     function createPlaceholderQRSVG() {
       return `
@@ -1040,42 +1065,42 @@
       if (pageNum === 1) {
         return `
           <div class="a5-page cover-front ${extraClasses}">
-            <div class="text-center space-y-2.5 pt-1">
+            <div class="text-center space-y-2 pt-1">
               <div class="w-16 h-16 mx-auto rounded-2xl bg-white text-blue-700 flex items-center justify-center text-4xl shadow-md border-2 border-blue-200">
                 🏥
               </div>
-              <div class="inline-block px-3 py-0.5 rounded-full bg-blue-900/60 border border-blue-400/40 text-[10px] font-extrabold uppercase tracking-widest text-blue-100">
-                Accessible Patient Information Booklet
+              <div class="inline-block px-3 py-0.5 rounded-full bg-blue-950/70 border border-blue-300/60 text-[10px] font-extrabold uppercase tracking-widest text-white">
+                Outpatient Visit Booklet · Version 2 Pilot
               </div>
               <h1 class="text-3xl font-extrabold tracking-tight leading-tight">
                 My Hospital Toolkit
               </h1>
-              <p class="text-xs sm:text-sm text-blue-100 font-medium leading-snug px-3">
-                Simple steps, hospital wayfinding, communication support, and helpful information
+              <p class="text-xs sm:text-sm text-white font-semibold leading-snug px-3">
+                Plain-language guide for before, during, and after your outpatient hospital visit
               </p>
             </div>
 
             <!-- Introduction & Overview Card (Preserved Style) -->
             <div class="bg-white text-slate-900 rounded-2xl p-4 shadow-sm space-y-2.5 border-2 border-blue-200">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-extrabold text-blue-700 uppercase tracking-wide">How This Booklet Helps You</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">No Phone Needed</span>
+                <span class="text-xs font-extrabold text-blue-800 uppercase tracking-wide">How This Booklet Helps You</span>
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">No Phone Needed</span>
               </div>
-              <p class="text-xs text-slate-700 leading-relaxed">
-                This booklet helps you <strong>navigate the hospital easily</strong>, <strong>understand each step</strong> of your visit, <strong>communicate your needs</strong> by pointing to cards, and <strong>prepare for your next steps</strong>.
+              <p class="text-xs text-slate-800 leading-relaxed">
+                Use this booklet <strong>before your visit</strong> to pack what you need, <strong>during your visit</strong> to find your department and talk with staff, and <strong>after your appointment</strong> to review your next steps.
               </p>
-              <div class="grid grid-cols-2 gap-2 pt-1 text-xs font-extrabold text-slate-800">
-                <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-2">
-                  <span class="text-base">🧭</span><span>Steps &amp; Wayfinding</span>
+              <div class="grid grid-cols-2 gap-2 pt-0.5 text-xs font-extrabold text-slate-900">
+                <div class="p-2 rounded-xl bg-blue-50 border border-blue-300 flex items-center gap-2">
+                  <span class="text-base">👣</span><span>1. Visit Steps</span>
                 </div>
-                <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-2">
-                  <span class="text-base">💬</span><span>Talk Cards</span>
+                <div class="p-2 rounded-xl bg-blue-50 border border-blue-300 flex items-center gap-2">
+                  <span class="text-base">🧭</span><span>2. Find My Way</span>
                 </div>
-                <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-2">
-                  <span class="text-base">✅</span><span>Checklist</span>
+                <div class="p-2 rounded-xl bg-blue-50 border border-blue-300 flex items-center gap-2">
+                  <span class="text-base">💬</span><span>3. Talk Cards</span>
                 </div>
-                <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-2">
-                  <span class="text-base">📖</span><span>Easy Info</span>
+                <div class="p-2 rounded-xl bg-blue-50 border border-blue-300 flex items-center gap-2">
+                  <span class="text-base">✅</span><span>4. Checklist &amp; Info</span>
                 </div>
               </div>
             </div>
@@ -1086,21 +1111,21 @@
                 ${qrSvg}
               </div>
               <div class="space-y-1 text-left">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-700">Prefer Digital?</div>
-                <div class="text-xs font-extrabold text-slate-900">Scan to Use the Digital Toolkit</div>
-                <p class="text-[11px] text-slate-600 leading-snug">
-                  Scan this code to open My Hospital Toolkit on your phone or tablet for interactive directions, audio read-aloud, and larger text.
+                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-800">Prefer Digital?</div>
+                <div class="text-xs font-extrabold text-slate-900">Scan to Open the Digital Website</div>
+                <p class="text-[11px] text-slate-700 leading-snug">
+                  Open the matching digital toolkit on your phone for interactive wayfinding, audio read-aloud, larger text, and high contrast.
                 </p>
                 <div class="pt-0.5">
-                  <span class="text-[10px] font-mono font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 inline-block">
+                  <span class="text-[10px] font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-300 inline-block">
                     ${currentShortUrl}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div class="flex items-center justify-between text-[10px] font-bold text-blue-100 pt-1">
-              <span>Use this booklet on paper or online</span>
+            <div class="flex items-center justify-between text-[10px] font-extrabold text-white pt-1">
+              <span>Outpatient Pilot Prototype · Paper or Online</span>
               <span>Page 1 of 8</span>
             </div>
           </div>
@@ -1113,134 +1138,134 @@
       if (pageNum === 2) {
         return `
           <div class="a5-page ${extraClasses}">
-            <div class="space-y-3">
+            <div class="space-y-2.5">
               <!-- Page Header -->
               <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2">
                 <div class="flex items-center gap-2.5">
                   <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg font-bold">🎒</span>
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Getting Ready &amp; Wayfinding Signs</div>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">Stage 1 · Getting Ready &amp; Hospital Signs</div>
                     <h2 class="text-lg font-extrabold text-slate-900 leading-tight">Before Your Hospital Visit</h2>
                   </div>
                 </div>
-                <span class="text-xs font-extrabold text-slate-400">Page 2</span>
+                <span class="text-xs font-extrabold text-slate-600">Page 2</span>
               </div>
 
               <!-- What to Bring Section -->
               <div class="space-y-1.5">
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-800 flex items-center gap-1.5">
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
                   <span>📦</span><span>What to Bring With You</span>
                 </h3>
 
                 <div class="grid grid-cols-2 gap-2">
-                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/50 flex items-start gap-2">
+                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-start gap-2">
                     <span class="text-xl flex-shrink-0">🪪</span>
                     <div>
                       <div class="font-extrabold text-xs text-slate-900">Health Card &amp; ID</div>
-                      <p class="text-[10px] text-slate-600 leading-snug">To check in at reception.</p>
+                      <p class="text-[10.5px] text-slate-700 leading-snug">Show this to check in at reception.</p>
                     </div>
                   </div>
 
-                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/50 flex items-start gap-2">
+                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-start gap-2">
                     <span class="text-xl flex-shrink-0">📅</span>
                     <div>
                       <div class="font-extrabold text-xs text-slate-900">Appointment Details</div>
-                      <p class="text-[10px] text-slate-600 leading-snug">Your letter, clinic, or time.</p>
+                      <p class="text-[10.5px] text-slate-700 leading-snug">Your clinic letter, room, or time.</p>
                     </div>
                   </div>
 
-                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/50 flex items-start gap-2">
+                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-start gap-2">
                     <span class="text-xl flex-shrink-0">💊</span>
                     <div>
                       <div class="font-extrabold text-xs text-slate-900">Medication List</div>
-                      <p class="text-[10px] text-slate-600 leading-snug">Pills or a list of what you take.</p>
+                      <p class="text-[10.5px] text-slate-700 leading-snug">A list of medicines you take now.</p>
                     </div>
                   </div>
 
-                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/50 flex items-start gap-2">
+                  <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-start gap-2">
                     <span class="text-xl flex-shrink-0">👓</span>
                     <div>
                       <div class="font-extrabold text-xs text-slate-900">Personal Supports</div>
-                      <p class="text-[10px] text-slate-600 leading-snug">Glasses, hearing or mobility aids.</p>
+                      <p class="text-[10.5px] text-slate-700 leading-snug">Glasses, hearing aids, or a helper.</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- What to Expect Section -->
+              <!-- Patient Journey Summary: Before, During & After -->
               <div class="space-y-1.5">
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-800 flex items-center gap-1.5">
-                  <span>🏥</span><span>What to Expect When You Arrive</span>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                  <span>🏥</span><span>Your Outpatient Visit: Before, During &amp; After</span>
                 </h3>
                 <div class="grid grid-cols-3 gap-2 text-center">
-                  <div class="p-2 rounded-xl border border-slate-200 bg-slate-50">
-                    <div class="text-xl">👋</div>
-                    <div class="font-extrabold text-[11px] text-slate-900 mt-0.5">Friendly Welcome</div>
-                    <p class="text-[10px] text-slate-600 leading-tight">Staff help you check in &amp; find your way.</p>
+                  <div class="p-2 rounded-xl border-2 border-slate-200 bg-slate-50">
+                    <div class="text-lg">🎒</div>
+                    <div class="font-extrabold text-[11px] text-slate-900 mt-0.5">1. Before</div>
+                    <p class="text-[10px] text-slate-700 leading-tight">Pack your card, med list, and supports.</p>
                   </div>
-                  <div class="p-2 rounded-xl border border-slate-200 bg-slate-50">
-                    <div class="text-xl">🪑</div>
-                    <div class="font-extrabold text-[11px] text-slate-900 mt-0.5">Waiting Area</div>
-                    <p class="text-[10px] text-slate-600 leading-tight">Sit comfortably until your name is called.</p>
+                  <div class="p-2 rounded-xl border-2 border-slate-200 bg-slate-50">
+                    <div class="text-lg">🧭</div>
+                    <div class="font-extrabold text-[11px] text-slate-900 mt-0.5">2. During</div>
+                    <p class="text-[10px] text-slate-700 leading-tight">Find your room, check in, and wait.</p>
                   </div>
-                  <div class="p-2 rounded-xl border border-slate-200 bg-slate-50">
-                    <div class="text-xl">🤝</div>
-                    <div class="font-extrabold text-[11px] text-slate-900 mt-0.5">Ask Questions</div>
-                    <p class="text-[10px] text-slate-600 leading-tight">Point to cards or take your time.</p>
+                  <div class="p-2 rounded-xl border-2 border-slate-200 bg-slate-50">
+                    <div class="text-lg">📋</div>
+                    <div class="font-extrabold text-[11px] text-slate-900 mt-0.5">3. After</div>
+                    <p class="text-[10px] text-slate-700 leading-tight">Ask what happens next before leaving.</p>
                   </div>
                 </div>
               </div>
 
               <!-- Hospital Signs Visual Key (Helps Navigate the Building!) -->
-              <div class="p-3 rounded-2xl border-2 border-blue-300 bg-blue-50/40 space-y-2">
+              <div class="p-2.5 rounded-2xl border-2 border-blue-300 bg-blue-50/50 space-y-1.5">
                 <div class="flex items-center justify-between">
                   <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
                     <span>🪧</span><span>Hospital Signs to Look For</span>
                   </h3>
-                  <span class="text-[10px] font-bold text-blue-700">Wayfinding Guide</span>
+                  <span class="text-[9.5px] font-extrabold px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">Example Zones</span>
                 </div>
-                <p class="text-[10px] text-slate-600 leading-tight">
-                  Look for these symbols and color lines on hospital walls and floors:
+                <p class="text-[10px] text-slate-700 leading-snug">
+                  Look for these symbols and colour zones on hospital walls. <strong>Note:</strong> Colour zones and directions are examples and may differ between hospitals.
                 </p>
                 <div class="grid grid-cols-4 gap-1.5 text-center">
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">ℹ️</div>
-                    <div class="text-[9.5px] font-extrabold text-slate-900 leading-tight">Reception</div>
+                    <div class="text-[10px] font-extrabold text-slate-900 leading-tight">Reception</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">🛗</div>
-                    <div class="text-[9.5px] font-extrabold text-slate-900 leading-tight">Elevators</div>
+                    <div class="text-[10px] font-extrabold text-slate-900 leading-tight">Elevators</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">🚻</div>
-                    <div class="text-[9.5px] font-extrabold text-slate-900 leading-tight">Restroom</div>
+                    <div class="text-[10px] font-extrabold text-slate-900 leading-tight">Restroom</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">🪑</div>
-                    <div class="text-[9.5px] font-extrabold text-slate-900 leading-tight">Waiting</div>
+                    <div class="text-[10px] font-extrabold text-slate-900 leading-tight">Waiting</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">🩺</div>
-                    <div class="text-[9.5px] font-extrabold text-blue-700 leading-tight">Blue: Clinics</div>
+                    <div class="text-[10px] font-extrabold text-blue-800 leading-tight">Blue: Clinics</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">🩸</div>
-                    <div class="text-[9.5px] font-extrabold text-emerald-700 leading-tight">Green: Lab</div>
+                    <div class="text-[10px] font-extrabold text-emerald-800 leading-tight">Green: Lab</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">📷</div>
-                    <div class="text-[9.5px] font-extrabold text-amber-700 leading-tight">Amber: X-Ray</div>
+                    <div class="text-[10px] font-extrabold text-amber-800 leading-tight">Amber: X-Ray</div>
                   </div>
-                  <div class="p-1.5 rounded-lg bg-white border border-slate-200">
+                  <div class="p-1.5 rounded-lg bg-white border border-slate-300">
                     <div class="text-lg">💊</div>
-                    <div class="text-[9.5px] font-extrabold text-purple-700 leading-tight">Pharmacy</div>
+                    <div class="text-[10px] font-extrabold text-purple-800 leading-tight">Purple: Pharm</div>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Page Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
               <span>My Hospital Toolkit · Preparation &amp; Signs</span>
               <span>Page 2 of 8</span>
             </div>
@@ -1260,82 +1285,82 @@
                 <div class="flex items-center gap-2.5">
                   <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg font-bold">👣</span>
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Step-by-Step &amp; Wayfinding</div>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">4-Stage Visit Steps &amp; Wayfinding</div>
                     <h2 class="text-lg font-extrabold text-slate-900 leading-tight">During Your Hospital Visit</h2>
                   </div>
                 </div>
-                <span class="text-xs font-extrabold text-slate-400">Page 3</span>
+                <span class="text-xs font-extrabold text-slate-600">Page 3</span>
               </div>
 
-              <!-- 4 Connected Steps -->
+              <!-- 4 Connected Stages (Matches Digital Visit Steps) -->
               <div class="space-y-1">
-                <!-- Step 1 -->
-                <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
+                <!-- Stage 1 -->
+                <div class="p-2 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
                   <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex-shrink-0 flex flex-col items-center justify-center font-extrabold leading-none">
-                    <span class="text-[8px] uppercase">Step</span>
+                    <span class="text-[8px] uppercase">Stage</span>
                     <span class="text-sm">1</span>
                   </div>
-                  <span class="text-2xl flex-shrink-0">🪪</span>
+                  <span class="text-2xl flex-shrink-0">🎒</span>
                   <div class="flex-1">
-                    <h3 class="font-extrabold text-xs text-slate-900">Check In at Reception</h3>
-                    <p class="text-[11px] text-slate-700 leading-tight">Show your health card or appointment details at the front desk.</p>
+                    <h3 class="font-extrabold text-xs text-slate-900">Before My Visit</h3>
+                    <p class="text-[11px] text-slate-800 leading-tight">Pack your health card, appointment details, med list, and supports. <strong>Next:</strong> Arrive at Main Reception.</p>
                   </div>
                 </div>
 
                 <div class="flex justify-center -my-0.5" aria-hidden="true">
-                  <span class="text-xs font-extrabold text-blue-600">↓</span>
+                  <span class="text-xs font-extrabold text-blue-700">↓</span>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
+                <!-- Stage 2 -->
+                <div class="p-2 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
                   <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex-shrink-0 flex flex-col items-center justify-center font-extrabold leading-none">
-                    <span class="text-[8px] uppercase">Step</span>
+                    <span class="text-[8px] uppercase">Stage</span>
                     <span class="text-sm">2</span>
                   </div>
                   <span class="text-2xl flex-shrink-0">🧭</span>
                   <div class="flex-1">
-                    <h3 class="font-extrabold text-xs text-slate-900">Find Your Department</h3>
-                    <p class="text-[11px] text-slate-700 leading-tight">Ask reception to mark your Zone &amp; Floor in the box below, then follow the signs.</p>
+                    <h3 class="font-extrabold text-xs text-slate-900">Finding My Department</h3>
+                    <p class="text-[11px] text-slate-800 leading-tight">Ask reception to fill in the box below. <strong>Next:</strong> Follow the signs to your Zone, Floor, and Room.</p>
                   </div>
                 </div>
 
                 <div class="flex justify-center -my-0.5" aria-hidden="true">
-                  <span class="text-xs font-extrabold text-blue-600">↓</span>
+                  <span class="text-xs font-extrabold text-blue-700">↓</span>
                 </div>
 
-                <!-- Step 3 -->
-                <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
+                <!-- Stage 3 -->
+                <div class="p-2 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
                   <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex-shrink-0 flex flex-col items-center justify-center font-extrabold leading-none">
-                    <span class="text-[8px] uppercase">Step</span>
+                    <span class="text-[8px] uppercase">Stage</span>
                     <span class="text-sm">3</span>
                   </div>
-                  <span class="text-2xl flex-shrink-0">🪑</span>
+                  <span class="text-2xl flex-shrink-0">🪪</span>
                   <div class="flex-1">
-                    <h3 class="font-extrabold text-xs text-slate-900">Wait for Your Appointment</h3>
-                    <p class="text-[11px] text-slate-700 leading-tight">Wait in the designated area until staff call your name.</p>
+                    <h3 class="font-extrabold text-xs text-slate-900">Checking In &amp; Waiting</h3>
+                    <p class="text-[11px] text-slate-800 leading-tight">Show your health card at the clinic desk. <strong>Next:</strong> Sit in the waiting area until staff call your name.</p>
                   </div>
                 </div>
 
                 <div class="flex justify-center -my-0.5" aria-hidden="true">
-                  <span class="text-xs font-extrabold text-blue-600">↓</span>
+                  <span class="text-xs font-extrabold text-blue-700">↓</span>
                 </div>
 
-                <!-- Step 4 -->
-                <div class="p-2.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
+                <!-- Stage 4 -->
+                <div class="p-2 rounded-xl border-2 border-blue-200 bg-blue-50/60 flex items-center gap-3">
                   <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex-shrink-0 flex flex-col items-center justify-center font-extrabold leading-none">
-                    <span class="text-[8px] uppercase">Step</span>
+                    <span class="text-[8px] uppercase">Stage</span>
                     <span class="text-sm">4</span>
                   </div>
                   <span class="text-2xl flex-shrink-0">📋</span>
                   <div class="flex-1">
-                    <h3 class="font-extrabold text-xs text-slate-900">Understand Your Next Steps</h3>
-                    <p class="text-[11px] text-slate-700 leading-tight">Ask about follow-up care and instructions before leaving.</p>
+                    <h3 class="font-extrabold text-xs text-slate-900">After My Appointment</h3>
+                    <p class="text-[11px] text-slate-800 leading-tight">Ask what happens next and get instructions written down. <strong>Next:</strong> Check Page 5 before going home.</p>
                   </div>
                 </div>
               </div>
 
               <!-- "Where I Need to Go" Staff Wayfinding Helper Card -->
-              <div class="p-3 rounded-2xl border-2 border-slate-800 bg-amber-50/60 space-y-2">
+              <div class="p-2.5 rounded-2xl border-2 border-slate-800 bg-amber-50/70 space-y-1.5">
                 <div class="flex items-center justify-between">
                   <div class="text-xs font-extrabold uppercase tracking-wide text-slate-900 flex items-center gap-1.5">
                     <span>📍</span><span>Where I Need to Go (Ask Reception to Circle)</span>
@@ -1344,35 +1369,35 @@
 
                 <!-- Color Zone Circle Options -->
                 <div class="grid grid-cols-4 gap-1.5 text-[10px] font-extrabold text-center">
-                  <div class="p-1.5 rounded-lg bg-blue-100 border border-blue-400 text-blue-900">🔵 Blue Zone</div>
-                  <div class="p-1.5 rounded-lg bg-emerald-100 border border-emerald-400 text-emerald-900">🟢 Green Zone</div>
-                  <div class="p-1.5 rounded-lg bg-amber-100 border border-amber-400 text-amber-900">🟡 Amber Zone</div>
-                  <div class="p-1.5 rounded-lg bg-purple-100 border border-purple-400 text-purple-900">🟣 Purple Zone</div>
+                  <div class="p-1.5 rounded-lg bg-blue-100 border border-blue-500 text-blue-950">🔵 Blue Zone</div>
+                  <div class="p-1.5 rounded-lg bg-emerald-100 border border-emerald-500 text-emerald-950">🟢 Green Zone</div>
+                  <div class="p-1.5 rounded-lg bg-amber-100 border border-amber-500 text-amber-950">🟡 Amber Zone</div>
+                  <div class="p-1.5 rounded-lg bg-purple-100 border border-purple-500 text-purple-950">🟣 Purple Zone</div>
                 </div>
 
                 <div class="grid grid-cols-3 gap-2 text-[10px]">
-                  <div class="bg-white p-1.5 rounded-lg border border-slate-300">
-                    <span class="font-bold text-slate-500 uppercase block">Elevator / Stairs</span>
-                    <div class="h-4 border-b border-dashed border-slate-400 mt-0.5"></div>
+                  <div class="bg-white p-1.5 rounded-lg border border-slate-400">
+                    <span class="font-extrabold text-slate-700 uppercase block">Elevator / Stairs</span>
+                    <div class="h-4 border-b border-dashed border-slate-500 mt-0.5"></div>
                   </div>
-                  <div class="bg-white p-1.5 rounded-lg border border-slate-300">
-                    <span class="font-bold text-slate-500 uppercase block">Floor Level</span>
-                    <div class="h-4 border-b border-dashed border-slate-400 mt-0.5"></div>
+                  <div class="bg-white p-1.5 rounded-lg border border-slate-400">
+                    <span class="font-extrabold text-slate-700 uppercase block">Floor Level</span>
+                    <div class="h-4 border-b border-dashed border-slate-500 mt-0.5"></div>
                   </div>
-                  <div class="bg-white p-1.5 rounded-lg border border-slate-300">
-                    <span class="font-bold text-slate-500 uppercase block">Room / Clinic #</span>
-                    <div class="h-4 border-b border-dashed border-slate-400 mt-0.5"></div>
+                  <div class="bg-white p-1.5 rounded-lg border border-slate-400">
+                    <span class="font-extrabold text-slate-700 uppercase block">Room / Clinic #</span>
+                    <div class="h-4 border-b border-dashed border-slate-500 mt-0.5"></div>
                   </div>
                 </div>
 
-                <div class="text-[10px] font-bold text-slate-700 text-center">
-                  👆 <em>If you get lost in the hallway, show this box to any staff member for directions.</em>
+                <div class="text-[9.5px] font-bold text-slate-800 text-center leading-tight">
+                  👆 <strong>Show this box to staff if you need directions.</strong> <em>(Zones above are examples and may vary by hospital.)</em>
                 </div>
               </div>
             </div>
 
             <!-- Page Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
               <span>Turn the page for Talk Cards &amp; Checklist ➡</span>
               <span>Page 3 of 8</span>
             </div>
@@ -1388,18 +1413,18 @@
           <div class="a5-page ${extraClasses}">
             <div class="space-y-2.5">
               <!-- Page Header -->
-              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2.5">
+              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2">
                 <div class="flex items-center gap-2.5">
                   <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg font-bold">💬</span>
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Visual Communication Support</div>
-                    <h2 class="text-lg font-extrabold text-slate-900 leading-tight">Talk Cards</h2>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">Visual Communication Support</div>
+                    <h2 class="text-lg font-extrabold text-slate-900 leading-tight">Talk Cards — Show to Staff</h2>
                   </div>
                 </div>
-                <span class="text-xs font-extrabold text-slate-400">Page 4</span>
+                <span class="text-xs font-extrabold text-slate-600">Page 4</span>
               </div>
 
-              <div class="p-2.5 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-2 text-xs font-bold text-blue-900">
+              <div class="p-2.5 rounded-xl bg-blue-50 border-2 border-blue-300 flex items-center gap-2 text-xs font-extrabold text-blue-950">
                 <span>👆</span>
                 <span>Point to any card below to show hospital staff what you need:</span>
               </div>
@@ -1407,11 +1432,11 @@
               <!-- 2x4 Grid of High-Contrast Talk Cards -->
               <div class="grid grid-cols-2 gap-2.5">
                 ${CARDS.map(c => `
-                  <div class="p-3 rounded-2xl border-2 border-slate-800 bg-white text-center flex flex-col items-center justify-center min-h-[100px] shadow-sm">
-                    <div class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-2xl mb-1.5">
+                  <div class="p-3 rounded-2xl border-2 border-slate-900 bg-white text-center flex flex-col items-center justify-center min-h-[104px] shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-300 flex items-center justify-center text-3xl mb-1.5">
                       ${c.icon}
                     </div>
-                    <div class="font-extrabold text-xs sm:text-sm text-slate-900 leading-tight px-1">
+                    <div class="font-extrabold text-sm sm:text-base text-slate-950 leading-tight px-1">
                       ${c.text}
                     </div>
                   </div>
@@ -1420,8 +1445,8 @@
             </div>
 
             <!-- Page Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
-              <span>🔊 Scan cover QR code to hear cards spoken aloud</span>
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
+              <span>🔊 Scan the cover QR code to hear these cards spoken aloud</span>
               <span>Page 4 of 8</span>
             </div>
           </div>
@@ -1429,59 +1454,72 @@
       }
 
       // -----------------------------------------------------------------------
-      // PAGE 5: MY HOSPITAL CHECKLIST (Before My Visit & Before I Leave)
+      // PAGE 5: MY HOSPITAL CHECKLIST (Before, During & After Your Visit)
       // -----------------------------------------------------------------------
       if (pageNum === 5) {
         return `
           <div class="a5-page ${extraClasses}">
-            <div class="space-y-3">
+            <div class="space-y-2.5">
               <!-- Page Header -->
-              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2.5">
+              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2">
                 <div class="flex items-center gap-2.5">
                   <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg font-bold">✅</span>
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Preparation &amp; Next Steps</div>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">Before, During &amp; After Your Visit</div>
                     <h2 class="text-lg font-extrabold text-slate-900 leading-tight">My Hospital Checklist</h2>
                   </div>
                 </div>
-                <span class="text-xs font-extrabold text-slate-400">Page 5</span>
+                <span class="text-xs font-extrabold text-slate-600">Page 5</span>
               </div>
 
-              <p class="text-xs text-slate-600 leading-snug">
-                Mark each large box with a pen (<strong>✓</strong>) as you get ready and before you go home.
+              <p class="text-xs text-slate-700 font-medium leading-snug">
+                Mark each box with a pen (<strong>✓</strong>) before your visit and before you go home.
               </p>
 
               <!-- Section 1: Before My Visit -->
-              <div class="p-3.5 rounded-2xl border-2 border-blue-200 bg-blue-50/50 space-y-2">
-                <div class="flex items-center gap-2 border-b border-blue-200 pb-1.5">
-                  <span class="text-base">🎒</span>
-                  <h3 class="font-extrabold text-xs uppercase tracking-wider text-blue-800">Before My Visit</h3>
+              <div class="p-3 rounded-2xl border-2 border-blue-300 bg-blue-50/50 space-y-1.5">
+                <div class="flex items-center justify-between border-b border-blue-200 pb-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🎒</span>
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider text-blue-900">Before My Visit (Stage 1)</h3>
+                  </div>
+                  <span class="text-[10px] font-bold text-blue-800">At Home</span>
                 </div>
 
-                <div class="space-y-2">
+                <div class="space-y-1.5">
                   ${CHECKS_BEFORE.map(item => `
-                    <div class="flex items-center gap-3 bg-white p-2.5 rounded-xl border border-slate-200">
+                    <div class="flex items-center gap-2.5 bg-white p-2 rounded-xl border border-slate-300">
                       <span class="pen-checkbox"></span>
                       <span class="text-lg flex-shrink-0">${item.icon}</span>
-                      <span class="text-xs font-bold text-slate-900 leading-tight">${item.text}</span>
+                      <span class="text-xs font-extrabold text-slate-900 leading-tight">${item.text}</span>
                     </div>
                   `).join('')}
                 </div>
               </div>
 
-              <!-- Section 2: Before I Leave -->
-              <div class="p-3.5 rounded-2xl border-2 border-emerald-200 bg-emerald-50/50 space-y-2">
-                <div class="flex items-center gap-2 border-b border-emerald-200 pb-1.5">
-                  <span class="text-base">🏡</span>
-                  <h3 class="font-extrabold text-xs uppercase tracking-wider text-emerald-800">Before I Leave</h3>
+              <!-- Quick Reminder for During Visit (Stages 2 & 3) -->
+              <div class="px-3 py-2 rounded-xl border-2 border-indigo-200 bg-indigo-50/70 flex items-center gap-2.5">
+                <span class="text-lg flex-shrink-0">🪪</span>
+                <p class="text-[10.5px] font-bold text-slate-800 leading-snug">
+                  <strong>During Your Visit (Stages 2 &amp; 3):</strong> Follow signs to your room, check in at the clinic desk, and show a <strong>Talk Card (Page 4)</strong> if you need help.
+                </p>
+              </div>
+
+              <!-- Section 2: Before I Leave / After My Appointment -->
+              <div class="p-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50/50 space-y-1.5">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">📋</span>
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider text-emerald-900">Before I Leave (Stage 4: After My Appointment)</h3>
+                  </div>
                 </div>
 
-                <div class="space-y-2">
+                <div class="space-y-1.5">
                   ${CHECKS_LEAVE.map(item => `
-                    <div class="flex items-center gap-3 bg-white p-2.5 rounded-xl border border-slate-200">
+                    <div class="flex items-center gap-2.5 bg-white p-2 rounded-xl border border-slate-300">
                       <span class="pen-checkbox"></span>
                       <span class="text-lg flex-shrink-0">${item.icon}</span>
-                      <span class="text-xs font-bold text-slate-900 leading-tight">${item.text}</span>
+                      <span class="text-xs font-extrabold text-slate-900 leading-tight">${item.text}</span>
                     </div>
                   `).join('')}
                 </div>
@@ -1489,7 +1527,7 @@
             </div>
 
             <!-- Page Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
               <span>My Hospital Toolkit · Checklist</span>
               <span>Page 5 of 8</span>
             </div>
@@ -1503,42 +1541,82 @@
       if (pageNum === 6) {
         return `
           <div class="a5-page ${extraClasses}">
-            <div class="space-y-2.5">
+            <div class="space-y-2">
               <!-- Page Header -->
-              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2.5">
+              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2">
                 <div class="flex items-center gap-2.5">
                   <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg font-bold">📖</span>
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Helpful Communication Tips</div>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">Plain-Language Communication Tips</div>
                     <h2 class="text-lg font-extrabold text-slate-900 leading-tight">Easy Information</h2>
                   </div>
                 </div>
-                <span class="text-xs font-extrabold text-slate-400">Page 6</span>
+                <span class="text-xs font-extrabold text-slate-600">Page 6</span>
               </div>
 
-              <p class="text-xs text-slate-600 leading-snug">
-                Ways you can ask hospital staff for clear information and communication support:
+              <p class="text-xs text-slate-700 font-medium leading-snug">
+                It is always okay to ask staff to slow down, use simple words, or write things down:
               </p>
 
-              <div class="space-y-2.5 pt-0.5">
+              <!-- 5 Information Sections -->
+              <div class="space-y-1.5">
                 ${EASY_INFO.map(info => `
-                  <div class="p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 flex items-start gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-xl flex-shrink-0 mt-0.5">
+                  <div class="p-2 rounded-2xl border-2 border-slate-300 bg-slate-50 flex items-start gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-blue-50 border border-blue-300 flex items-center justify-center text-lg flex-shrink-0 mt-0.5">
                       ${info.icon}
                     </div>
                     <div>
-                      <h3 class="font-extrabold text-xs text-slate-900">${info.title}</h3>
-                      <p class="text-[11px] text-slate-600 leading-snug mt-0.5">
+                      <h3 class="font-extrabold text-xs text-slate-900 leading-snug">${info.title}</h3>
+                      <p class="text-[10.5px] text-slate-700 leading-snug mt-0.5">
                         ${info.desc}
                       </p>
                     </div>
                   </div>
                 `).join('')}
               </div>
+
+              <!-- 3 Separate Large Point-to-Communicate Cards for Staff -->
+              <div class="pt-1 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1">
+                    <span>👆</span><span>Point to Show Hospital Staff</span>
+                  </span>
+                  <span class="text-[9.5px] font-bold text-slate-600">Quick Talk Cards</span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="p-2.5 rounded-2xl border-2 border-slate-900 bg-blue-50/70 text-center flex flex-col items-center justify-center min-h-[78px] shadow-sm">
+                    <div class="w-8 h-8 rounded-lg bg-white border border-blue-300 flex items-center justify-center text-lg mb-1">
+                      🐢
+                    </div>
+                    <div class="font-extrabold text-xs text-slate-950 leading-tight">
+                      Please speak slowly.
+                    </div>
+                  </div>
+
+                  <div class="p-2.5 rounded-2xl border-2 border-slate-900 bg-blue-50/70 text-center flex flex-col items-center justify-center min-h-[78px] shadow-sm">
+                    <div class="w-8 h-8 rounded-lg bg-white border border-blue-300 flex items-center justify-center text-lg mb-1">
+                      ✍️
+                    </div>
+                    <div class="font-extrabold text-xs text-slate-950 leading-tight">
+                      Please write that down.
+                    </div>
+                  </div>
+
+                  <div class="p-2.5 rounded-2xl border-2 border-slate-900 bg-blue-50/70 text-center flex flex-col items-center justify-center min-h-[78px] shadow-sm">
+                    <div class="w-8 h-8 rounded-lg bg-white border border-blue-300 flex items-center justify-center text-lg mb-1">
+                      ❓
+                    </div>
+                    <div class="font-extrabold text-xs text-slate-950 leading-tight">
+                      What happens next?
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Page Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
               <span>My Hospital Toolkit · Easy Information</span>
               <span>Page 6 of 8</span>
             </div>
@@ -1552,68 +1630,68 @@
       if (pageNum === 7) {
         return `
           <div class="a5-page ${extraClasses}">
-            <div class="space-y-3">
+            <div class="space-y-2.5">
               <!-- Page Header -->
-              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2.5">
+              <div class="flex items-center justify-between border-b-2 border-blue-600 pb-2">
                 <div class="flex items-center gap-2.5">
                   <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg font-bold">📝</span>
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-700">Personal Notes</div>
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-800">Before, During &amp; After Your Visit</div>
                     <h2 class="text-lg font-extrabold text-slate-900 leading-tight">My Questions &amp; Next Steps</h2>
                   </div>
                 </div>
-                <span class="text-xs font-extrabold text-slate-400">Page 7</span>
+                <span class="text-xs font-extrabold text-slate-600">Page 7</span>
               </div>
 
-              <p class="text-xs text-slate-600 leading-snug">
-                Use these optional spaces to jot down questions or next steps. <em>You do not need to write private medical details here.</em>
+              <p class="text-xs text-slate-700 leading-snug">
+                Write down questions before your visit, or ask staff to write down your next steps before you leave. <em>No private medical details are required.</em>
               </p>
 
               <!-- Box 1: Questions I Want to Ask -->
-              <div class="p-3 rounded-2xl border-2 border-blue-200 bg-blue-50/30 space-y-2">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-800 flex items-center gap-1.5">
-                  <span>❓</span><span>Questions I Want to Ask Today</span>
+              <div class="p-3 rounded-2xl border-2 border-blue-300 bg-blue-50/40 space-y-2">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                  <span>❓</span><span>1. Questions I Want to Ask Today</span>
                 </div>
-                <div class="bg-white rounded-xl p-2.5 border border-slate-300 space-y-4">
-                  <div class="border-b border-dashed border-slate-300 h-4"></div>
-                  <div class="border-b border-dashed border-slate-300 h-4"></div>
-                  <div class="border-b border-dashed border-slate-300 h-4"></div>
+                <div class="bg-white rounded-xl p-2.5 border border-slate-400 space-y-4">
+                  <div class="border-b border-dashed border-slate-400 h-4"></div>
+                  <div class="border-b border-dashed border-slate-400 h-4"></div>
+                  <div class="border-b border-dashed border-slate-400 h-4"></div>
                 </div>
               </div>
 
               <!-- Box 2: My Next Steps & Follow-Up Instructions -->
-              <div class="p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 space-y-2">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                  <span>👣</span><span>Follow-Up Instructions &amp; Next Steps (Optional)</span>
+              <div class="p-3 rounded-2xl border-2 border-slate-300 bg-slate-50 space-y-2">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                  <span>👣</span><span>2. After My Appointment: Next Steps &amp; Follow-Up</span>
                 </div>
-                <div class="bg-white rounded-xl p-2.5 border border-slate-300 space-y-4">
-                  <div class="border-b border-dashed border-slate-300 h-4"></div>
-                  <div class="border-b border-dashed border-slate-300 h-4"></div>
-                  <div class="border-b border-dashed border-slate-300 h-4"></div>
+                <div class="bg-white rounded-xl p-2.5 border border-slate-400 space-y-4">
+                  <div class="border-b border-dashed border-slate-400 h-4"></div>
+                  <div class="border-b border-dashed border-slate-400 h-4"></div>
+                  <div class="border-b border-dashed border-slate-400 h-4"></div>
                 </div>
               </div>
 
               <!-- Box 3: Contact Information -->
-              <div class="p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 space-y-2">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                  <span>📞</span><span>Clinic / Support Contact Information (Optional)</span>
+              <div class="p-3 rounded-2xl border-2 border-slate-300 bg-slate-50 space-y-2">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                  <span>📞</span><span>3. Who to Contact If I Need Help</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                  <div class="bg-white rounded-xl p-2 border border-slate-300">
-                    <div class="text-[10px] font-bold text-slate-500 uppercase">Department / Name</div>
-                    <div class="h-5 border-b border-dashed border-slate-300 mt-1"></div>
+                  <div class="bg-white rounded-xl p-2 border border-slate-400">
+                    <div class="text-[10px] font-extrabold text-slate-700 uppercase">Clinic / Department</div>
+                    <div class="h-5 border-b border-dashed border-slate-400 mt-1"></div>
                   </div>
-                  <div class="bg-white rounded-xl p-2 border border-slate-300">
-                    <div class="text-[10px] font-bold text-slate-500 uppercase">Phone / Hours</div>
-                    <div class="h-5 border-b border-dashed border-slate-300 mt-1"></div>
+                  <div class="bg-white rounded-xl p-2 border border-slate-400">
+                    <div class="text-[10px] font-extrabold text-slate-700 uppercase">Phone Number / Hours</div>
+                    <div class="h-5 border-b border-dashed border-slate-400 mt-1"></div>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Page Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
-              <span>Tip: You can ask staff to help fill in your next steps</span>
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
+              <span>Tip: Ask staff "Please write that down" to fill in this page</span>
               <span>Page 7 of 8</span>
             </div>
           </div>
@@ -1626,56 +1704,56 @@
       if (pageNum === 8) {
         return `
           <div class="a5-page bg-slate-50 ${extraClasses}">
-            <div class="space-y-3.5">
+            <div class="space-y-3">
               <!-- Back Cover Top Brand Banner -->
-              <div class="p-4 rounded-2xl bg-blue-700 text-white text-center space-y-1.5 shadow-sm">
-                <div class="w-11 h-11 mx-auto rounded-xl bg-white text-blue-700 flex items-center justify-center text-2xl font-bold">
+              <div class="p-3.5 rounded-2xl bg-blue-700 text-white text-center space-y-1 shadow-sm">
+                <div class="w-10 h-10 mx-auto rounded-xl bg-white text-blue-700 flex items-center justify-center text-2xl font-bold">
                   🏥
                 </div>
-                <h2 class="text-lg font-extrabold tracking-tight">My Hospital Toolkit</h2>
+                <h2 class="text-lg font-extrabold tracking-tight">My Hospital Toolkit · Version 2</h2>
                 <p class="text-xs text-blue-100 leading-snug">
-                  Making hospital navigation and information easier—on paper and online.
+                  Plain-language support before, during, and after your outpatient visit.
                 </p>
               </div>
 
-              <!-- Short Explanation of the Unified Toolkit -->
-              <div class="p-3.5 rounded-2xl bg-white border-2 border-slate-200 space-y-1.5">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-700">About This Toolkit</div>
-                <p class="text-xs text-slate-700 leading-relaxed">
-                  <strong>My Hospital Toolkit</strong> supports clear wayfinding and communication before, during, and after your appointment. Keep this booklet with your visit papers or share it with your support person.
+              <!-- Short Explanation of the Unified Toolkit & Pilot Scope -->
+              <div class="p-3 rounded-2xl bg-white border-2 border-slate-300 space-y-1">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-800">Outpatient Pilot Prototype Note</div>
+                <p class="text-[11px] text-slate-800 leading-relaxed">
+                  <strong>My Hospital Toolkit</strong> helps you prepare at home, find your department, communicate with staff, and understand your next steps. Wayfinding colour zones and directions in this booklet are examples and may differ between hospitals.
                 </p>
               </div>
 
               <!-- Reminder to Ask Hospital Staff for Assistance -->
-              <div class="p-3.5 rounded-2xl bg-emerald-50 border-2 border-emerald-200 flex items-start gap-3">
+              <div class="p-3 rounded-2xl bg-emerald-50 border-2 border-emerald-300 flex items-start gap-3">
                 <span class="text-2xl flex-shrink-0">🙋</span>
                 <div>
-                  <div class="font-extrabold text-xs text-emerald-950">Need Directions or Assistance?</div>
-                  <p class="text-xs text-emerald-900 leading-snug mt-0.5">
-                    Please ask any receptionist, volunteer, nurse, or staff member for help. You can show them your Page 3 destination box or any Talk Card in this booklet.
+                  <div class="font-extrabold text-xs text-emerald-950">Need Directions or Help Today?</div>
+                  <p class="text-[11px] text-emerald-950 leading-snug mt-0.5">
+                    Ask any receptionist, volunteer, nurse, or staff member. Show them your <strong>Page 3 destination box</strong> or point to a <strong>Talk Card on Page 4</strong>.
                   </p>
                 </div>
               </div>
 
               <!-- Repeated QR Code for Optional Digital Access -->
-              <div class="p-4 rounded-2xl bg-white border-2 border-blue-400 text-center space-y-2 shadow-sm">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-700">
+              <div class="p-3.5 rounded-2xl bg-white border-2 border-blue-400 text-center space-y-1.5 shadow-sm">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-blue-800">
                   Prefer Digital?
                 </div>
                 <div class="text-xs font-extrabold text-slate-900">
-                  Scan to Open the Digital Toolkit &amp; Wayfinding Map
+                  Scan to Open the Matching Digital Website
                 </div>
 
-                <div class="w-28 h-28 mx-auto bg-white p-2 rounded-xl border-2 border-slate-900 flex items-center justify-center">
+                <div class="w-24 h-24 mx-auto bg-white p-1.5 rounded-xl border-2 border-slate-900 flex items-center justify-center">
                   ${qrSvg}
                 </div>
 
-                <p class="text-[11px] text-slate-600 leading-snug px-2">
-                  Includes interactive step-by-step directions, audio Read-Aloud, adjustable large text, and high-contrast mode.
+                <p class="text-[11px] text-slate-700 leading-snug px-2">
+                  Matches the stages, Talk Cards, checklist, and tips in this booklet—plus audio Read-Aloud, larger text, and high contrast.
                 </p>
 
                 <div>
-                  <span class="text-[10px] font-mono font-bold text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200 inline-block">
+                  <span class="text-[10px] font-mono font-bold text-blue-900 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-300 inline-block">
                     ${currentShortUrl}
                   </span>
                 </div>
@@ -1683,7 +1761,7 @@
             </div>
 
             <!-- Back Cover Footer -->
-            <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-slate-500">
+            <div class="pt-2 border-t border-slate-300 flex items-center justify-between text-[10px] font-bold text-slate-600">
               <span>My Hospital Toolkit · Back Cover</span>
               <span>Page 8 of 8</span>
             </div>
@@ -1939,25 +2017,35 @@
 
     function renderStep() {
       const s = STEPS[stepIdx];
-      document.getElementById('step-count').textContent = `Step ${stepIdx + 1} of ${STEPS.length}`;
+      document.getElementById('step-count').textContent = `Stage ${stepIdx + 1} of ${STEPS.length}`;
       document.getElementById('step-icon').textContent = s.icon;
       document.getElementById('step-title').textContent = `${stepIdx + 1}. ${s.title}`;
       document.getElementById('step-desc').textContent = s.desc;
       document.getElementById('btn-prev').disabled = stepIdx === 0;
       document.getElementById('btn-next').textContent = stepIdx === STEPS.length - 1 ? 'Start Over ↺' : 'Next ➡';
 
-      // Show Wayfinding shortcut button when on Step 2 (Find Your Department)
+      document.getElementById('step-items').innerHTML = (s.items || []).map(item => `
+        <li class="card flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 bg-slate-50">
+          <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">✓</span>
+          <span class="font-bold text-sm sm:text-base leading-snug">${item}</span>
+        </li>
+      `).join('');
+
+      // Show Wayfinding shortcut button when on Stage 2 (Finding My Department)
       document.getElementById('step-wayfinding-callout').classList.toggle('hidden', stepIdx !== 1);
 
       document.getElementById('digital-step-dots').innerHTML = STEPS.map((item, idx) => `
-        <button onclick="goToDigitalStep(${idx})" class="w-9 h-9 rounded-full font-extrabold text-sm flex items-center justify-center transition ${
+        <button onclick="goToDigitalStep(${idx})" aria-label="Stage ${idx + 1}: ${item.title}" aria-current="${idx === stepIdx ? 'step' : 'false'}" class="px-3 py-2 rounded-xl font-extrabold text-xs sm:text-sm flex items-center gap-1.5 transition ${
           idx === stepIdx
             ? 'bg-blue-600 text-white ring-4 ring-blue-200'
             : idx < stepIdx
             ? 'bg-emerald-600 text-white'
-            : 'bg-slate-200 text-slate-700'
-        }">${idx + 1}</button>
-        ${idx < STEPS.length - 1 ? '<span class="text-slate-400 font-bold">→</span>' : ''}
+            : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+        }">
+          <span>${idx + 1}.</span>
+          <span class="hidden sm:inline">${item.title}</span>
+        </button>
+        ${idx < STEPS.length - 1 ? '<span class="text-slate-400 font-bold" aria-hidden="true">→</span>' : ''}
       `).join('');
     }
 
@@ -1973,7 +2061,8 @@
 
     function speakStep() {
       const s = STEPS[stepIdx];
-      speak(`Step ${stepIdx + 1}: ${s.title}. ${s.desc}`);
+      const details = (s.items || []).join(' ');
+      speak(`Stage ${stepIdx + 1}: ${s.title}. ${s.desc} ${details}`);
     }
 
     // Digital Wayfinding Interactive Logic
